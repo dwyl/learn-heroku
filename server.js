@@ -10,9 +10,9 @@ server.connection({ port: process.env.PORT || 5000 });
 
 server.route({
 	method: 'GET',
-	path: '/.well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0',
+	path: '.well-known/acme-challenge/3UoARvgLG5PDURYa8haL1CqQmy_x5EoF6dRDk5WBPt8',
 	handler: function(request, reply){
-		return reply('WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w');
+		return reply('3UoARvgLG5PDURYa8haL1CqQmy_x5EoF6dRDk5WBPt8.dbnTdm75t4zabjMpVbogCC2MxBM_xwf0t75kXaqbh1w');
 	}
 })
 
