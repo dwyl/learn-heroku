@@ -57,6 +57,39 @@ in your terminal our case it's: `WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0`
 + replace the token (string) in the reply to match what you see in the terminal.
 our token is: `WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w`
 
+### Set Git Remote
+
+Check what your _current_ `origin` remote is:
+```sh
+git remote -v
+```
+![git-remote](https://cloud.githubusercontent.com/assets/194400/23256452/7318d01e-f9b7-11e6-94cb-d5450d1addea.png)
+
+Set it to what ever the git url is for your application:
+```sh
+git remote set-url origin git@github.com:healthlocker/healthlocker.git
+```
+
+Push your current branch to the GitHub repo:
+```sh
+git push --set-upstream origin letsencrypt-temporary-server
+```
+
+### _Temporarily_ Change the Branch Heroku Deploys from
+
+![ssl1](https://cloud.githubusercontent.com/assets/194400/23256626/22f87da4-f9b8-11e6-96d1-72e50ebeffa4.png)
+
+Change it to the name of your branch e.g:
+
+![ssl2](https://cloud.githubusercontent.com/assets/194400/23256625/22f75cee-f9b8-11e6-896f-296e353429be.png)
+
+It should look something like this:
+
+![ssl-deploy-from-diff-branch](https://cloud.githubusercontent.com/assets/194400/23256660/4f30b1de-f9b8-11e6-9b5b-7bc3fab14700.png)
+
+
+
+<!--
 ### Set Heroku Remote
 
 Ensure that you have a Heroku Remote Set to what ever your app is.
@@ -72,6 +105,7 @@ Or if you already have a heroku remote for this project, update it:
 git remote -v
 git remote set-url heroku https://git.heroku.com/healthlocker.git
 ```
+-->
 
 ### Push Branch to Heroku (Temporarily) Run a Node.js Server on Heroku
 
