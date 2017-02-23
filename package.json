@@ -1,14 +1,14 @@
 {
   "name": "learn-heroku",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
-    "express": "3.1.x"
+    "hapi": "^16.1.0"
   },
   "engines": {
-    "node": "0.10.x",
+    "node": "6.10.x",
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node web.js"
+    "start": "node server.js"
   }
 }
