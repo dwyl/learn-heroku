@@ -72,3 +72,8 @@ Or if you already have a heroku remote for this project, update it:
 git remote -v
 git remote set-url heroku https://git.heroku.com/healthlocker.git
 ```
+
+### Push Branch to Heroku (Temporarily) Run a Node.js Server on Heroku
+
+Check the name of your branch:
+![image](https://cloud.githubusercontent.com/assets/194400/23256132/1865065c-f9b6-11e6-99cf-636f9b3365d8.png)
