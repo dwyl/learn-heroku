@@ -12,10 +12,6 @@ Let's Encrypt offers a ***Free*** Automated SLL Certificate Service
 
 see: https://letsencrypt.org/about/
 
-
-Following the instructions in this tutorial:
-https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku
-
 Install `certbot`
 ```sh
 brew install certbot
@@ -106,27 +102,40 @@ And then `delete` them (_temporarily_):
 
 ![heroku-no-buildpack](https://cloud.githubusercontent.com/assets/194400/23256791/e5e9700c-f9b8-11e6-9b65-71e8e34a3f00.png)
 
+After I `delete` the build pack and push another commit, it passes:
 
+![build success](https://cloud.githubusercontent.com/assets/194400/23257017/bed113de-f9b9-11e6-87de-85572bff35ef.png)
 
-<!--
-### Set Heroku Remote
+### Visit the Endpoint in your Browser to confirm it worked:
 
-Ensure that you have a Heroku Remote Set to what ever your app is.
-ours is: `https://git.heroku.com/healthlocker.git`
+our is: http://www.healthlocker.uk/.well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
 
-so in your terminal write somethign like:
+![confirm endpoint working](https://cloud.githubusercontent.com/assets/194400/23257100/36807910-f9ba-11e6-942d-d548d2b99ed9.png)
 
+### Continue with the Certbot process
+
+When I _attempted_ to `continue` it failed:
+
+![certbot failed](https://cloud.githubusercontent.com/assets/194400/23257173/92a8eb78-f9ba-11e6-9a5e-53ad99a584f3.png)
+
+Output
 ```sh
-git remote add heroku https://git.heroku.com/healthlocker.git
-```
-Or if you already have a heroku remote for this project, update it:
-```sh
-git remote -v
-git remote set-url heroku https://git.heroku.com/healthlocker.git
-```
--->
+Waiting for verification...
+An unexpected error occurred:
+ConnectionError: ('Connection aborted.', error("(60, 'ETIMEDOUT')",))
+Please see the logfiles in /var/log/letsencrypt for more details.
 
-### Push Branch to Heroku (Temporarily) Run a Node.js Server on Heroku
+IMPORTANT NOTES:
+ - If you lose your account credentials, you can recover through
+   e-mails sent to contact.nelsonic@gmail.com.
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+```
 
-Check the name of your branch:
-![image](https://cloud.githubusercontent.com/assets/194400/23256132/1865065c-f9b6-11e6-99cf-636f9b3365d8.png)
+## Background Reading
+
+Inspired by the instructions in this tutorial:
+https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku
