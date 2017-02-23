@@ -85,7 +85,8 @@ Change it to the name of your branch e.g:
 
 It should look something like this:
 
-![ssl-deploy-from-diff-branch](https://cloud.githubusercontent.com/assets/194400/23256660/4f30b1de-f9b8-11e6-9b5b-7bc3fab14700.png)
+![ssl-deploy-from-diff-branch-disable-ci-check](https://cloud.githubusercontent.com/assets/194400/23256955/7e62225c-f9b9-11e6-9ba0-74e5d2644f8a.png)
+remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to pass before deploy`.
 
 make a commit on your local branch so you can push to github (_and trigger the heroku build_)
 
