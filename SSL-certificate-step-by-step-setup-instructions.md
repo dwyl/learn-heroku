@@ -87,6 +87,24 @@ It should look something like this:
 
 ![ssl-deploy-from-diff-branch](https://cloud.githubusercontent.com/assets/194400/23256660/4f30b1de-f9b8-11e6-9b5b-7bc3fab14700.png)
 
+make a commit on your local branch so you can push to github (_and trigger the heroku build_)
+
+in my case the build failed:
+
+![heroku-activity-log-fail](https://cloud.githubusercontent.com/assets/194400/23256822/026ec3a8-f9b9-11e6-9c4b-c26af4276426.png)
+
+
+because we are using an Elixir "Build Pack" for the app (_so deploying a node app won't work!_):
+
+![elixir-build-pack](https://cloud.githubusercontent.com/assets/194400/23256717/a1e89c98-f9b8-11e6-8cf4-a85c704a73dd.png)
+
+So I made a note of the buildpack urls:
++ https://github.com/HashNuke/heroku-buildpack-elixir.git
++ https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+And then `delete` them (_temporarily_):
+
+![heroku-no-buildpack](https://cloud.githubusercontent.com/assets/194400/23256791/e5e9700c-f9b8-11e6-9b65-71e8e34a3f00.png)
+
 
 
 <!--
