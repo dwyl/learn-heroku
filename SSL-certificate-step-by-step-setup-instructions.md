@@ -14,10 +14,12 @@ to Secure/Encrypt all communications between users and your app.
 
 ## What?
 
-Let's Encrypt offers a ***Free*** Automated SSL Certificate Service brought to you by the non-profit Internet Security Research Group (ISRG). <br />
+Let's Encrypt offers a ***Free*** _Automated_ SSL Certificate Service
+brought to you by the **_non-profit_
+Internet Security Research Group** (ISRG). <br />
 see: https://letsencrypt.org/about/
 
-### Works for apps written in _Any_ Language/Framework!
+### Instructions Valid for Apps Written in _Any_ Language/Framework!
 
 The instructions in this tutorial/guide are applicable
 to an app written in ***any language or framework***.
@@ -32,6 +34,8 @@ Once you have set up SSL you can deploy what ever kind of app you like.
 node.js is just an easy way to get this working in a **generic** way._)
 
 ## How?
+
+"Certbot" is the script that helps to _automate_ the certification process.
 
 ### Step 0: Clone this Repository to get the Setup Code
 
@@ -346,6 +350,10 @@ After running `certbot` _another_ time, it worked. :rocket:
 
 ## Background Reading
 
++ An introduction to SSL certificates:
+https://woocommerce.com/2015/12/ssl-certificates-for-ecommerce
++ Public Key Certificate: https://en.wikipedia.org/wiki/Public_key_certificate
++ Transport Layer Security: https://en.wikipedia.org/wiki/Transport_Layer_Security
 + Certbot Manual mode: https://certbot.eff.org/docs/using.html#manual
 + Inspiration tutorial (_Ruby-on-Rails focussed_):
 https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku
