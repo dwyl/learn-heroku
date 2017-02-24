@@ -157,7 +157,7 @@ You should expect to see: <br />
 
 ### Intermediate: Detailed Step-by-Step Instructions for _Your_ App
 
-> To be added soon!
+> Coming soon!
 
 ### Intermediate: Environment Variables on Heroku
 
@@ -168,7 +168,8 @@ see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-her
 
 A Version of your App for Each Pull Request!
 
-> Help wanted!
+> First ensure that you _understand_ what Continuous Integration is...
+see: https://github.com/dwyl/learn-travis
 
 ### Advanced: Docker Containers
 

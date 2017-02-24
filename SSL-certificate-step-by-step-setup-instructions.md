@@ -1,7 +1,9 @@
-# Step-by-Step Setup Instructions for Let's Encrypt
+![letsencrypt-760x320](https://cloud.githubusercontent.com/assets/194400/23311312/8c4cc85a-faad-11e6-912c-9cc96ec21da6.png)
 
-> Note: These instructions are only applicable to web apps
-with a custom domain name.
+# Step-by-Step Setup Instructions for Let's Encrypt _Free_ SSL
+
+> _Note: These instructions are only applicable to web apps
+with a **custom domain** name_.
 
 
 ## Why?
@@ -12,11 +14,32 @@ to Secure/Encrypt all communications between users and your app.
 
 ## What?
 
-Let's Encrypt offers a ***Free*** Automated SLL Certificate Service
-
+Let's Encrypt offers a ***Free*** Automated SSL Certificate Service brought to you by the non-profit Internet Security Research Group (ISRG). <br />
 see: https://letsencrypt.org/about/
 
+### Works for apps written in _Any_ Language/Framework!
+
+The instructions in this tutorial/guide are applicable
+to an app written in ***any language or framework***.
+You will _temporarily_ deploy a Node.js `http-server` to your Heroku app
+which will allow Let's Encrypt to _verify_ that you "_own_" the app/domain.
+
+> _**Note**: No Node.js knowledge is assumed or required. You won't be
+writing a single line of JS code._
+
+Once you have set up SSL you can deploy what ever kind of app you like.
+(_in our case the app is written in [Elixir/Phoenix!](https://github.com/dwyl/technology-stack/#the-pete-stack)
+node.js is just an easy way to get this working in a **generic** way._)
+
 ## How?
+
+### Step 0: Clone this Repository to get the Setup Code
+
+```
+git clone https://github.com/dwyl/learn-heroku.git
+cd learn-heroku
+
+````
 
 ### Step 1: Install `certbot`
 
@@ -38,20 +61,26 @@ Once you've installed `certbot` run the following command:
 sudo certbot certonly --manual
 ```
 
-Top-tip you will want to use both the domain an `www` subdomain:
+Remember to use both the domain a `www` subdomain. (_separated by a space_) e.g:
 
+```
+example.com www.example.com
+```
+
+Our app was:
 ```
 healthlocker.uk www.healthlocker.uk
 ```
 
 Follow the steps and **pay _close_ attention**!
 
-Enter the
-
 When you reach the screen that looks like this:
+
 ![certbot-instructions](https://cloud.githubusercontent.com/assets/194400/23255249/c7d2b250-f9b2-11e6-9d45-d2cdb965defa.png)
 
-Instructions: (_for reference ONLY see below for modified instructions_)
+_**DON'T** `continue` until you have completed
+
+Instructions: (_for reference ONLY see below for sub-set of instructions_)
 ```
 mkdir -p /tmp/certbot/public_html/.well-known/acme-challenge
 cd /tmp/certbot/public_html
@@ -64,7 +93,7 @@ s = BaseHTTPServer.HTTPServer(('', 80), SimpleHTTPServer.SimpleHTTPRequestHandle
 s.serve_forever()"
 ```
 
-You _wont_ be _able_ to run shell commands on the Heroku instance
+You _wont_ be _able_ to run shell commands on a Heroku instance
 so we need to use a _temporary_ node.js server to achieve our objective.
 
 In your `current working directory` (_on your localhost_)
@@ -81,6 +110,7 @@ they should look _something_ like this:
 printf "%s" WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w > .well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
 ```
 The tokens will be _specific_ to you so make sure you get the correct tokens.
+
 
 ### Step 3: Set Git Remote
 
@@ -114,12 +144,16 @@ It should look something like this:
 remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to
 pass before deploy` (_we have no tests for this temporary server!_).
 
-make a commit on your local branch so you can push to github (_and trigger the heroku build_)
+### Step 4.1: Commit Your Changes (_the token file_) and Push to GitHub
 
+Make a commit on your local branch so you can push to github (_and trigger the heroku build_)
 
 ### Step 5: Visit the Endpoint in your Browser to confirm it worked:
 
-our is: http://healthlocker.uk/.well-known/acme-challenge/
+Visit your app in a browser to confirm the deploy worked.
+e.g: http://example.com/.well-known/acme-challenge/
+
+The url for _our_ app was: http://healthlocker.uk/.well-known/acme-challenge/
 
 ![click-on-filename-to-test](https://cloud.githubusercontent.com/assets/194400/23293421/eda79e68-fa5d-11e6-95d4-a8c57fe4a8fd.png)
 
@@ -222,9 +256,15 @@ Restore the `default` branch for deployment on Heroku:
 <br /> <br /><br /> <br />
 
 
-## Trouble-Shooting
+# Trouble-Shooting (_if it doesn't work!_)
 
-The _first_ time I tried this the build ***failed***:
+The _first_ time I tried to run the `certbot` command, _nothing_ worked!
+E.g: the Build failed on Heroku, the cert process failed (_see below_).
+This is a catalog of the Trouble-Shooting we did.
+
+> _As always, if you get stuck,
+  [**ask a question**](https://github.com/dwyl/learn-heroku/issues)
+  we will try our best to help!_
 
 ![heroku-activity-log-fail](https://cloud.githubusercontent.com/assets/194400/23256822/026ec3a8-f9b9-11e6-9c4b-c26af4276426.png)
 
@@ -272,7 +312,11 @@ I deleted all the files created in the process and started from scratch ...
 Failed again: <br />
 ![fail again](https://cloud.githubusercontent.com/assets/194400/23263831/4c5070d4-f9d7-11e6-8559-57b2aa714b26.png)
 
-Just keep trying ...
+Re-trace your steps and make sure you followed the instructions _exactly_.
+Also, timing matters. if you take a break between steps
+you will get a "Time Out Error"...
+We initially got it wrong,
+but after re-running the command it works as expected.
 
 
 #### If you get a _Certificate Warning_ in Step 7.8
