@@ -34,9 +34,9 @@ Once you've installed `certbot` run the following command:
 sudo certbot certonly --manual
 ```
 
+Follow the steps and **pay _close_ attention**!
 
-
-Follow the steps and pay _close_ attention!
+Enter the
 
 When you reach the screen that looks like this:
 ![certbot-instructions](https://cloud.githubusercontent.com/assets/194400/23255249/c7d2b250-f9b2-11e6-9d45-d2cdb965defa.png)
@@ -46,6 +46,7 @@ Instructions: (_for reference ONLY see below for modified instructions_)
 mkdir -p /tmp/certbot/public_html/.well-known/acme-challenge
 cd /tmp/certbot/public_html
 printf "%s" WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w > .well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
+
 # run only once per server:
 $(command -v python2 || command -v python2.7 || command -v python2.6) -c \
 "import BaseHTTPServer, SimpleHTTPServer; \
@@ -56,18 +57,22 @@ s.serve_forever()"
 You _wont_ be _able_ to run shell commands on the Heroku instance
 so we need to use a _temporary_ node.js server to achieve our objective.
 
-In your `current working directory`
+In your `current working directory` (_on your localhost_)
+run the following command to create the `.well-known/acme-challenge` directory:
 
+```
+mkdir -p .well-known/acme-challenge
+```
 
-Open [`server.js`](https://github.com/dwyl/learn-heroku/blob/master/server.js)
-and:
-+ update the route that starts with `/.well-known/acme-challenge/`
-+ replace the string after `acme-challenge/` with the string you see
-in your terminal our case it's: `WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0`
-+ replace the token (string) in the reply to match what you see in the terminal.
-our token is: `WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w`
+Now ***copy-paste*** the `printf` command from the `certbot` instructions:
+they should look _something_ like this:
 
-### Set Git Remote
+```
+printf "%s" WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w > .well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
+```
+The tokens will be _specific_ to you so make sure you get the correct tokens.
+
+### Step 3: Set Git Remote
 
 Check what your _current_ `origin` remote is:
 ```sh
@@ -75,7 +80,7 @@ git remote -v
 ```
 ![git-remote](https://cloud.githubusercontent.com/assets/194400/23256452/7318d01e-f9b7-11e6-94cb-d5450d1addea.png)
 
-Set it to what ever the git url is for your application:
+Set it to what ever the git url is for the app you are setting up SSL for. e.g:
 ```sh
 git remote set-url origin git@github.com:healthlocker/healthlocker.git
 ```
@@ -85,7 +90,7 @@ Push your current branch to the GitHub repo:
 git push --set-upstream origin letsencrypt-temporary-server
 ```
 
-### _Temporarily_ Change the Branch Heroku Deploys from
+### Step 4: _Temporarily_ Change the Branch Heroku Deploys from
 
 ![ssl1](https://cloud.githubusercontent.com/assets/194400/23256626/22f87da4-f9b8-11e6-96d1-72e50ebeffa4.png)
 
@@ -96,11 +101,27 @@ Change it to the name of your branch e.g:
 It should look something like this:
 
 ![ssl-deploy-from-diff-branch-disable-ci-check](https://cloud.githubusercontent.com/assets/194400/23256955/7e62225c-f9b9-11e6-9ba0-74e5d2644f8a.png)
-remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to pass before deploy`.
+remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to
+pass before deploy` (_we have no tests for this temporary server!_).
 
 make a commit on your local branch so you can push to github (_and trigger the heroku build_)
 
-in my case the build failed:
+
+### Step 5: Visit the Endpoint in your Browser to confirm it worked:
+
+our is: http://www.healthlocker.uk/.well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
+
+![confirm endpoint working](https://cloud.githubusercontent.com/assets/194400/23257100/36807910-f9ba-11e6-942d-d548d2b99ed9.png)
+
+### Step 6:  Continue with the Certbot process
+
+
+<br /> <br /><br /> <br />
+
+
+## Trouble-Shooting
+
+The _first_ time I tried this the build ***failed***:
 
 ![heroku-activity-log-fail](https://cloud.githubusercontent.com/assets/194400/23256822/026ec3a8-f9b9-11e6-9c4b-c26af4276426.png)
 
@@ -120,13 +141,7 @@ After I `delete` the build pack and push another commit, it passes:
 
 ![build success](https://cloud.githubusercontent.com/assets/194400/23257017/bed113de-f9b9-11e6-87de-85572bff35ef.png)
 
-### Visit the Endpoint in your Browser to confirm it worked:
-
-our is: http://www.healthlocker.uk/.well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
-
-![confirm endpoint working](https://cloud.githubusercontent.com/assets/194400/23257100/36807910-f9ba-11e6-942d-d548d2b99ed9.png)
-
-### Continue with the Certbot process
+### Failed to `continue` with `certbot` process ...
 
 When I _attempted_ to `continue` it failed:
 
@@ -149,10 +164,12 @@ IMPORTANT NOTES:
    making regular backups of this folder is ideal.
 ```
 
-Failed again:
+I deleted all the files created in the process and started from scratch ...
+
+Failed again: <br />
 ![fail again](https://cloud.githubusercontent.com/assets/194400/23263831/4c5070d4-f9d7-11e6-8559-57b2aa714b26.png)
 
-
+Just keep trying ...
 
 ## Background Reading
 
