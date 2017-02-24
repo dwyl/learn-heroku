@@ -53,10 +53,10 @@ s = BaseHTTPServer.HTTPServer(('', 80), SimpleHTTPServer.SimpleHTTPRequestHandle
 s.serve_forever()"
 ```
 
-You _wont_ be _able_ to run commands on the Heroku instance
+You _wont_ be _able_ to run shell commands on the Heroku instance
 so we need to use a _temporary_ node.js server to achieve our objective.
 
-In your `current working director` 
+In your `current working directory`
 
 
 Open [`server.js`](https://github.com/dwyl/learn-heroku/blob/master/server.js)
