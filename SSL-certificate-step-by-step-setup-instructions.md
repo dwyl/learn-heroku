@@ -38,6 +38,12 @@ Once you've installed `certbot` run the following command:
 sudo certbot certonly --manual
 ```
 
+Top-tip you will want to use both the domain an `www` subdomain:
+
+```
+healthlocker.uk www.healthlocker.uk
+```
+
 Follow the steps and **pay _close_ attention**!
 
 Enter the
@@ -160,8 +166,8 @@ by running the following command in your terminal:
 ```
 sudo cat /etc/letsencrypt/live/healthlocker.uk/fullchain.pem | pbcopy
 ```
-> Note: `sudo` is required because the `certbot` runs as admin
-for explanation of the `pbcopy` see: http://superuser.com/questions/113529/how-can-i-load-a-files-contents-into-the-clipboard
+> Note: `sudo` is required because the `certbot` runs as admin <br />
+for explanation of the `pbcopy` command see: <br /> http://superuser.com/questions/113529/how-can-i-load-a-files-contents-into-the-clipboard
 
 #### Step 7.4: _Paste_ the _Pulbic_ Certificate
 
@@ -203,18 +209,14 @@ Confirm that the certificate was _successfully_ added to the app on Heroku:
 
 e.g: https://www.healthlocker.uk
 
-Takes _ages_ to load and then dispalys a Certificate warning:
-
-![chrome-security-warning-details](https://cloud.githubusercontent.com/assets/194400/23295425/7e08fdf8-fa68-11e6-818d-b8acfb8aca89.png)
-
-If we _inspect_ the details of the warning we see that the browser
-is getting the
-
-
-
+![boom-ssl-enabled](https://cloud.githubusercontent.com/assets/194400/23307463/8ffdb602-fa9f-11e6-92c5-806e3393386e.png)
 
 
 ### Step 8: Clean up (Restore the Default Deployment Branch and Build Pack)
+
+Restore the `default` branch for deployment on Heroku:
+
+![heroku-deploy-from-master-branch](https://cloud.githubusercontent.com/assets/194400/23308283/a28df9e6-faa2-11e6-8edd-ceeb82a52cfa.png)
 
 
 <br /> <br /><br /> <br />
@@ -271,6 +273,32 @@ Failed again: <br />
 ![fail again](https://cloud.githubusercontent.com/assets/194400/23263831/4c5070d4-f9d7-11e6-8559-57b2aa714b26.png)
 
 Just keep trying ...
+
+
+#### If you get a _Certificate Warning_ in Step 7.8
+
+If you visit your domain e.g: https://www.healthlocker.uk
+and takes _ages_ to load and then displays a Certificate warning:
+
+![chrome-security-warning-details](https://cloud.githubusercontent.com/assets/194400/23295425/7e08fdf8-fa68-11e6-818d-b8acfb8aca89.png)
+
+If we _inspect_ the details of the warning we see that the browser
+is getting an incorrect cert.
+
+![firefox-ssl-warning](https://cloud.githubusercontent.com/assets/194400/23307628/17988c9a-faa0-11e6-8418-8d5828993751.png)
+
+I updated the DNS Settings to:
+
+![healthlocker-dns-settings](https://cloud.githubusercontent.com/assets/194400/23307670/3fccde14-faa0-11e6-9d36-4034598d03cb.png)
+
+And then we got this error:
+![heroku-cert-wrong-domain](https://cloud.githubusercontent.com/assets/194400/23307746/8a44b69c-faa0-11e6-9fde-f27fc68118a5.png)
+
+So I re-ran `certbot` command for _both_ domains `healthlocker.uk www.healthlocker.uk`:
+![get-certificate-for-multiple-domains](https://cloud.githubusercontent.com/assets/194400/23307789/bb81ddf2-faa0-11e6-9c21-d6db8ab2dfb5.png)
+
+After running `certbot` _another_ time, it worked. :rocket:
+
 
 ## Background Reading
 
