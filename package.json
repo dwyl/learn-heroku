@@ -6,8 +6,7 @@
     "live-server": "^1.2.0"
   },
   "engines": {
-    "node": "6.10.x",
-    "npm": "1.2.x"
+    "node": "6.10.x"
   },
   "scripts": {
     "start": "node node_modules/.bin/http-server",

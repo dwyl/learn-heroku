@@ -148,16 +148,16 @@ That will trigger the Heroku deployment of the Hello World Application!
 > In my case the URL for my app is: https://hello-world-heroku-node.herokuapp.com
 
 You should expect to see: <br />
-![learn-heroku-result](https://cloud.githubusercontent.com/assets/194400/23249056/5490f418-f99a-11e6-9833-1e3b905d9c80.png)
+![learn-heroku-hello-world](https://cloud.githubusercontent.com/assets/194400/23319783/edd7954c-facf-11e6-9059-0862a69e1fd3.png)
 
-#### Congratulations! You just _deployed_ your first app on Heroku!
+### Congratulations! You just _deployed_ your first app on Heroku!
 
 
-<br /><br /><br />
+<br /><br /><br /><br /><br /><br />
 
 ### Intermediate: Detailed Step-by-Step Instructions for _Your_ App
 
-> To be added soon!
+> Coming soon!
 
 ### Intermediate: Environment Variables on Heroku
 
@@ -168,7 +168,8 @@ see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-her
 
 A Version of your App for Each Pull Request!
 
-> Help wanted!
+> First ensure that you _understand_ what Continuous Integration is...
+see: https://github.com/dwyl/learn-travis
 
 ### Advanced: Docker Containers
 

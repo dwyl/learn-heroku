@@ -1,7 +1,9 @@
-# Step-by-Step Setup Instructions for Let's Encrypt
+![letsencrypt-760x320](https://cloud.githubusercontent.com/assets/194400/23311312/8c4cc85a-faad-11e6-912c-9cc96ec21da6.png)
 
-> Note: These instructions are only applicable to web apps
-with a custom domain name.
+# Step-by-Step Setup Instructions for Let's Encrypt _Free_ SSL
+
+> _Note: These instructions are only applicable to web apps
+with a **custom domain** name_.
 
 
 ## Why?
@@ -12,13 +14,71 @@ to Secure/Encrypt all communications between users and your app.
 
 ## What?
 
-Let's Encrypt offers a ***Free*** Automated SLL Certificate Service
-
+Let's Encrypt offers a ***Free*** _Automated_ SSL Certificate Service
+brought to you by the **_non-profit_
+Internet Security Research Group** (ISRG).
 see: https://letsencrypt.org/about/
+
+### Instructions Valid for Apps Written in _Any_ Language/Framework!
+
+The instructions in this tutorial/guide are applicable
+to an app written in ***any language or framework***.
+You will _temporarily_ deploy a Node.js `http-server` to your Heroku app
+which will allow Let's Encrypt to _verify_ that you "_own_" the app/domain.
+
+> _**Note**: No Node.js knowledge is assumed or required. You won't be
+writing a single line of JS code._
+
+Once you have set up SSL you can deploy what ever kind of app you like.
+(_in our case the app is written in [Elixir/Phoenix!](https://github.com/dwyl/technology-stack/#the-pete-stack) ...
+node.js is just an easy way to get this working in a **generic** way._)
 
 ## How?
 
-### Step 1: Install `certbot`
+"**certbot**" is the script that _automates_ the certificate creation process.
+
+### Step 1: Clone this Repository to get the Setup Code
+
+```
+git clone https://github.com/dwyl/learn-heroku.git
+cd learn-heroku
+```
+
+### Step 2: Set Git Remote
+
+Check what your _current_ `origin` remote is:
+```sh
+git remote -v
+```
+![git-remote](https://cloud.githubusercontent.com/assets/194400/23321003/400c1fa4-fad5-11e6-8e9b-0caf85963dd1.png)
+
+Set it to what ever the git url is for the app you are setting up SSL for. e.g:
+```sh
+git remote set-url origin git@github.com:healthlocker/healthlocker.git
+```
+
+Push your current branch to the GitHub repo:
+```sh
+git push --set-upstream origin letsencrypt-temporary-server
+```
+
+### Step 3: _Temporarily_ Change the Branch Heroku Deploys from
+
+![ssl1](https://cloud.githubusercontent.com/assets/194400/23256626/22f87da4-f9b8-11e6-96d1-72e50ebeffa4.png)
+
+Change it to the name of your branch e.g:
+
+![ssl2](https://cloud.githubusercontent.com/assets/194400/23256625/22f75cee-f9b8-11e6-896f-296e353429be.png)
+
+It should look something like this:
+
+![ssl-deploy-from-diff-branch-disable-ci-check](https://cloud.githubusercontent.com/assets/194400/23256955/7e62225c-f9b9-11e6-9ba0-74e5d2644f8a.png)
+remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to
+pass before deploy` <br />
+(_we have no tests for this temporary server!_).
+
+
+### Step 4: Install `certbot`
 
 > `certbot` installation instructions for various platforms:
 https://letsencrypt.org/getting-started
@@ -28,30 +88,37 @@ brew install certbot
 ```
 ![bew-install-certbot](https://cloud.githubusercontent.com/assets/194400/23254553/59f014a0-f9b0-11e6-9667-4e5e9b8014bc.png)
 
-(_might take a few minutes to install on a slower internet connection...
+(_it might take a few minutes to install on a slower internet connection...
   be patient..._)
 
-### Step 2: Run `certbot` Command (_Manual Setup_)
+### Step 4: Run `certbot` Command (_Manual Setup_)
 
 Once you've installed `certbot` run the following command:
 ```sh
 sudo certbot certonly --manual
 ```
 
-Top-tip you will want to use both the domain an `www` subdomain:
+Remember to use both the domain a `www` subdomain. (_separated by a space_) e.g:
 
+```
+example.com www.example.com
+```
+
+Our app was:
 ```
 healthlocker.uk www.healthlocker.uk
 ```
 
 Follow the steps and **pay _close_ attention**!
 
-Enter the
-
 When you reach the screen that looks like this:
+
 ![certbot-instructions](https://cloud.githubusercontent.com/assets/194400/23255249/c7d2b250-f9b2-11e6-9d45-d2cdb965defa.png)
 
-Instructions: (_for reference ONLY see below for modified instructions_)
+_**DON'T** `continue` until you have completed **Step 5**_.
+
+Instructions printed by `certbot`:
+(_for reference ONLY see below for sub-set of instructions_)
 ```
 mkdir -p /tmp/certbot/public_html/.well-known/acme-challenge
 cd /tmp/certbot/public_html
@@ -64,15 +131,19 @@ s = BaseHTTPServer.HTTPServer(('', 80), SimpleHTTPServer.SimpleHTTPRequestHandle
 s.serve_forever()"
 ```
 
-You _wont_ be _able_ to run shell commands on the Heroku instance
+You _wont_ be _able_ to run shell commands on a Heroku instance
 so we need to use a _temporary_ node.js server to achieve our objective.
 
 In your `current working directory` (_on your localhost_)
 run the following command to create the `.well-known/acme-challenge` directory:
 
+#### Step 4.1 Create the `.well-known/acme-challenge` Directory (_if it doesn't exist_)
+
 ```
 mkdir -p .well-known/acme-challenge
 ```
+
+#### Step 4.2 Create a File for the Token Verification
 
 Now ***copy-paste*** the `printf` command from the `certbot` instructions:
 they should look _something_ like this:
@@ -81,45 +152,26 @@ they should look _something_ like this:
 printf "%s" WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0.kURQ5HbILtRXEwJA2QI4W5TdBkjnZNqH2_RHORvmN6w > .well-known/acme-challenge/WgFpodyij_PDzkU0MZ3CzKCI05hjLOcq2tP-1rs6ko0
 ```
 The tokens will be _specific_ to you so make sure you get the correct tokens.
+(_there is one token per domain_)
 
-### Step 3: Set Git Remote
+#### Step 4.3: Commit Your Changes (_the token file_) and Push to GitHub
 
-Check what your _current_ `origin` remote is:
-```sh
-git remote -v
+Make a commit on your local branch so you can push to github
+(_and trigger the heroku build_)
+
 ```
-![git-remote](https://cloud.githubusercontent.com/assets/194400/23256452/7318d01e-f9b7-11e6-94cb-d5450d1addea.png)
-
-Set it to what ever the git url is for the app you are setting up SSL for. e.g:
-```sh
-git remote set-url origin git@github.com:healthlocker/healthlocker.git
+git add .
+git commit -m 'add letsencrypt verification file'
+git push
 ```
+That will deploy the file you created in Step 4.2 to Heroku.
 
-Push your current branch to the GitHub repo:
-```sh
-git push --set-upstream origin letsencrypt-temporary-server
-```
+### Step 5: Visit the Endpoint in your Browser to _Confirm_ it _Worked_:
 
-### Step 4: _Temporarily_ Change the Branch Heroku Deploys from
+Visit your app in a web browser to confirm the deploy worked.
+e.g: http://example.com/.well-known/acme-challenge
 
-![ssl1](https://cloud.githubusercontent.com/assets/194400/23256626/22f87da4-f9b8-11e6-96d1-72e50ebeffa4.png)
-
-Change it to the name of your branch e.g:
-
-![ssl2](https://cloud.githubusercontent.com/assets/194400/23256625/22f75cee-f9b8-11e6-896f-296e353429be.png)
-
-It should look something like this:
-
-![ssl-deploy-from-diff-branch-disable-ci-check](https://cloud.githubusercontent.com/assets/194400/23256955/7e62225c-f9b9-11e6-9ba0-74e5d2644f8a.png)
-remember to (_temporarily_) _dissable_ the checkbox `Wait for CI to
-pass before deploy` (_we have no tests for this temporary server!_).
-
-make a commit on your local branch so you can push to github (_and trigger the heroku build_)
-
-
-### Step 5: Visit the Endpoint in your Browser to confirm it worked:
-
-our is: http://healthlocker.uk/.well-known/acme-challenge/
+The url for _our_ app was: http://healthlocker.uk/.well-known/acme-challenge
 
 ![click-on-filename-to-test](https://cloud.githubusercontent.com/assets/194400/23293421/eda79e68-fa5d-11e6-95d4-a8c57fe4a8fd.png)
 
@@ -222,9 +274,15 @@ Restore the `default` branch for deployment on Heroku:
 <br /> <br /><br /> <br />
 
 
-## Trouble-Shooting
+# Trouble-Shooting (_if it doesn't work!_)
 
-The _first_ time I tried this the build ***failed***:
+The _first_ time I tried to run the `certbot` command, _nothing_ worked!
+E.g: the Build failed on Heroku, the cert process failed (_see below_).
+This is a catalog of the Trouble-Shooting we did.
+
+> _As always, if you get stuck,
+  [**ask a question**](https://github.com/dwyl/learn-heroku/issues)
+  we will try our best to help!_
 
 ![heroku-activity-log-fail](https://cloud.githubusercontent.com/assets/194400/23256822/026ec3a8-f9b9-11e6-9c4b-c26af4276426.png)
 
@@ -272,7 +330,11 @@ I deleted all the files created in the process and started from scratch ...
 Failed again: <br />
 ![fail again](https://cloud.githubusercontent.com/assets/194400/23263831/4c5070d4-f9d7-11e6-8559-57b2aa714b26.png)
 
-Just keep trying ...
+Re-trace your steps and make sure you followed the instructions _exactly_.
+Also, timing matters. if you take a break between steps
+you will get a "Time Out Error"...
+We initially got it wrong,
+but after re-running the command it works as expected.
 
 
 #### If you get a _Certificate Warning_ in Step 7.8
@@ -302,6 +364,10 @@ After running `certbot` _another_ time, it worked. :rocket:
 
 ## Background Reading
 
++ An introduction to SSL certificates:
+https://woocommerce.com/2015/12/ssl-certificates-for-ecommerce
++ Public Key Certificate: https://en.wikipedia.org/wiki/Public_key_certificate
++ Transport Layer Security: https://en.wikipedia.org/wiki/Transport_Layer_Security
 + Certbot Manual mode: https://certbot.eff.org/docs/using.html#manual
 + Inspiration tutorial (_Ruby-on-Rails focussed_):
 https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku
