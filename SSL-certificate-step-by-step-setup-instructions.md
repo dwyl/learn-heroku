@@ -12,7 +12,13 @@ Let's Encrypt offers a ***Free*** Automated SLL Certificate Service
 
 see: https://letsencrypt.org/about/
 
-Install `certbot`
+## How?
+
+### Step 1: Install `certbot`
+
+> `certbot` installation instructions for various platforms:
+https://letsencrypt.org/getting-started
+
 ```sh
 brew install certbot
 ```
@@ -21,9 +27,14 @@ brew install certbot
 (_might take a few minutes to install on a slower internet connection...
   be patient..._)
 
+### Step 2: Run `certbot` Command (_Manual Setup_)
+
+Once you've installed `certbot` run the following command:
 ```sh
 sudo certbot certonly --manual
 ```
+
+
 
 Follow the steps and pay _close_ attention!
 
@@ -42,8 +53,11 @@ s = BaseHTTPServer.HTTPServer(('', 80), SimpleHTTPServer.SimpleHTTPRequestHandle
 s.serve_forever()"
 ```
 
-You _wont_ have access to the Server on Heroku so we need to use a _temporary_
-node.js server to achieve our objective.
+You _wont_ be _able_ to run commands on the Heroku instance
+so we need to use a _temporary_ node.js server to achieve our objective.
+
+In your `current working director` 
+
 
 Open [`server.js`](https://github.com/dwyl/learn-heroku/blob/master/server.js)
 and:
@@ -119,7 +133,7 @@ When I _attempted_ to `continue` it failed:
 ![certbot failed](https://cloud.githubusercontent.com/assets/194400/23257173/92a8eb78-f9ba-11e6-9a5e-53ad99a584f3.png)
 
 Output
-```sh
+```
 Waiting for verification...
 An unexpected error occurred:
 ConnectionError: ('Connection aborted.', error("(60, 'ETIMEDOUT')",))
@@ -135,7 +149,13 @@ IMPORTANT NOTES:
    making regular backups of this folder is ideal.
 ```
 
+Failed again:
+![fail again](https://cloud.githubusercontent.com/assets/194400/23263831/4c5070d4-f9d7-11e6-8559-57b2aa714b26.png)
+
+
+
 ## Background Reading
 
-Inspired by the instructions in this tutorial:
++ Certbot Manual mode: https://certbot.eff.org/docs/using.html#manual
++ Inspiration tutorial (_Ruby-on-Rails focussed_):
 https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku
