@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Heroku - Hello World!</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+
+
+<script>
+var ua = navigator.userAgent.toLowerCase(); 
+if (ua.indexOf('safari') != -1) { 
+  if (ua.indexOf('chrome') > -1) {
+    alert("1") // Chrome
+  } else {
+    alert("2") // Safari
+  }
+}
+</script>
+
+<video class="hero_landing_page" width="100%" controls="true" preload="none" poster="/images/video_poster.png">
+  <source src="/video/finished_webadress_sound.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+</video>
+
+<div class="container">
+<iframe src="http://www.youtube.com/embed/9EGGUknjcFA" 
+frameborder="0" allowfullscreen class="video"></iframe>
+</div>
+
+<!-- CSS in HTML file for simplicity not "best practice" -->
+<style>
+.container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<style>
+h1 {
+  color: teal;
+  border: 3px teal solid;
+  font-size: 6em;
+  padding: 1em;
+  margin: 0.5em;
+  text-align: center;
+  font-family: sans-serif;
+}
+</style>
+  </body>
+</html>
