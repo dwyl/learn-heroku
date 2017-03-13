@@ -7,42 +7,30 @@
   <body>
     <h1>Hello World!</h1>
 
-
-<script>
-var ua = navigator.userAgent.toLowerCase(); 
-if (ua.indexOf('safari') != -1) { 
-  if (ua.indexOf('chrome') > -1) {
-    alert("1") // Chrome
-  } else {
-    alert("2") // Safari
-  }
-}
-</script>
-
-<video class="hero_landing_page" width="100%" controls="true" preload="none" poster="/images/video_poster.png">
-  <source src="/video/finished_webadress_sound.mp4" type="video/mp4">
+<video id='normal_video' class="hero_landing_page" width="100%" controls="true" preload="none" poster="http://freedfromed.co.uk//images/video_poster.png">
+  <source src="http://freedfromed.co.uk/video/finished_webadress_sound.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
 </video>
 
-<div class="container">
-<iframe src="http://www.youtube.com/embed/9EGGUknjcFA" 
-frameborder="0" allowfullscreen class="video"></iframe>
+<div class="container hero_landing_page" id='safari_video'>
+  <iframe src="//www.youtube.com/embed/9EGGUknjcFA"  frameborder="0" allowfullscreen class="video"></iframe>
 </div>
 
 <!-- CSS in HTML file for simplicity not "best practice" -->
 <style>
-.container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
+#safari_video.container {
+  display: none;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
 }
 .video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
 
@@ -57,5 +45,20 @@ h1 {
   font-family: sans-serif;
 }
 </style>
+
+<script>
+(function() { // from: http://stackoverflow.com/a/7944490/1148249
+  var ua = navigator.userAgent.toLowerCase(); 
+  if (ua.indexOf('safari') != -1) { 
+    if (ua.indexOf('chrome') > -1) {
+      console.log('play normal video')
+    } else { // SAFARI
+      console.log('play safari (youtube) video!')
+      document.getElementById('safari_video').style.display = 'block';
+      document.getElementById('normal_video').style.display = 'none';
+    }
+  }
+})();
+</script>
   </body>
 </html>
