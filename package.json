@@ -1,14 +1,15 @@
 {
   "name": "learn-heroku",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "dependencies": {
-    "hapi": "^16.1.0"
+    "http-server": "^0.9.0",
+    "live-server": "^1.2.0"
   },
   "engines": {
-    "node": "6.10.x",
-    "npm": "1.2.x"
+    "node": "6.10.x"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node node_modules/.bin/http-server",
+    "local": "node_modules/.bin/live-server --port=8080"
   }
 }

@@ -8,50 +8,76 @@ You know how to _create_ a web application,
 but that knowledge is only _useful_
 if you how to _show_ the app to people!
 
-### "Top 7" Key Benefits:
-
-+ Basic apps e.g. Demo, Hackathon or "Low Traffic" are ***Free***!!
-+ Service quality is _really_ good (_under the hood Heroku uses Amazon Web Services_)
-+ Excellent **knowledge base** / documentation for both simple and advanced topics!
-+ Easily setup ***continuous deployment*** from a GitHub repository.
-+ Vast array of "Addons" you can use with your app in a couple of clicks:
-https://elements.heroku.com/addons
-+ **Cost-effective** for your ***first 10k users***!
-
 ## What?
 
 Easily deploy your node.js web application to Heroku
-so you can start testing it with end-users as soon as possible! (5 mins!)
+so you can start testing it with end-users as soon as possible!
+
+You'll have a _public_ URL for your app in 5 minutes which you can share
+with real people and get feedback/validation for your idea!
+
+### "Top 7" Key Benefits:
+
++ Basic apps are ***Free***!! (_e.g. Demo, Hackathon or "Low Traffic"
+Personal "Blog" or Portfolio site_)
+
++ _***Quick and Easy Deployment***_ from your development machine or GitHub!
+A couple of clicks or a single command is all it takes!
+
++ Excellent **knowledge base** / documentation for
+both simple and advanced topics!
+(_if you get stuck,
+  [**ask a question**](https://github.com/dwyl/learn-heroku/issues)
+  we can/will help!_)
+
++ ***Continuous Deployment*** is easy from a GitHub repository using "Hooks".
+(_see step-by-step tutorial below!_)
+
++ Great Range of of "**Addon Services**" you can use with your app
+in a couple of clicks (_e.g: PostgreSQL, ElasticSearch, Monitoring etc._) <br />
+and most have a "free tier"
+so you can get started without spending a penny!
+See: https://elements.heroku.com/addons
+
++ "_Industry Standard_" ***Service Quality*** is _really_ good
+(_under the hood Heroku uses Amazon Web Services
+  but they do all the "plumbing" so you don't have to waste time on "DevOps"
+  until you're ready to scale, at which point just pay for a pro!_)
+
++ **Cost-effective** for your ***first 10k users***
+(_don't waste your time on "DevOps" till you have validated your App Idea
+with real people!_)
 
 
 ## Who?
 
-_Anyone_ who values their _time_ and wants/needs
-a _painless_ way to deploy a web application.
+_Anyone_ building for the web who values their _time_ and wants/needs
+a _painless_ way to ***deploy, monitor and automatically scale***
+an app!
 
 
 ## How?
 
 ### Beginner: Basic Heroku Deployment of Node.JS App in 5 Minutes
 
-#### Pre-requisites
+#### Pre-requisites:
 + **Computer** with a ***Web Browser***
 + **Internet Connection**
 + ***GitHub Account*** ... if you don't have one see:
 [github.com/dwyl/github-reference#how-to-**sign-up**](https://github.com/dwyl/github-reference#how-to-sign-up)
-+ Heroku account ... if you don't have one, sign up now: https://signup.heroku.com
++ Heroku account ... if you don't have one, sign up now: https://signup.heroku.com (_it's free! and **no credit card required**!_)
 
 #### No Experience/Knoweldge Required
 + No Node.js or other knowledge required
-+ All web-based (_no command line, we can learn that later!_)
++ All web-based (_no command line, we can learn that "CLI" later!_)
 
 #### 1. Fork this repository on GitHub!
 
-In your web browser navigate to: [github.com/dwyl/**learn-heroku**](https://github.com/dwyl/learn-heroku)
-<br />
+In your web browser navigate to:
+[github.com/dwyl/**learn-heroku**](https://github.com/dwyl/learn-heroku)
 (_if you aren't already on the page_)
 
-Click the "fork" button
+Click the "fork" button: <br />
 ![learn-heroku-fork-button](https://cloud.githubusercontent.com/assets/194400/23248016/267e77b2-f995-11e6-9748-0ef7dc69c22a.png)
 
 You should now see something similar to this:
@@ -61,25 +87,31 @@ You should now see something similar to this:
 
 #### 2. Log into your Heroku Account and Create a New App
 
-> Note if you don't already have a Heroku account set one up now!
+> **Note**: if you don't already have a Heroku account set one up now!
 
 Visit: https://dashboard.heroku.com/new and create your new app. <br />
 _example_: <br />
 ![create-new-app](https://cloud.githubusercontent.com/assets/194400/23212611/6881bd72-f8ff-11e6-8c00-6ddf4c97c3ef.png) <br />
-(_you will ned to give your app a different name_)
+(_you will need to give your app a different name. all heroku apps are unique._)
 
 
 #### 3. Use Heroku (Web) UI to Deploy the Application
 
-Once you create your app in Heroku you will be shown the "Deploy" screen:
+Once you create your app in Heroku you will be shown the "***Deploy***" screen:
 
 ![learn-heroku-deployment](https://cloud.githubusercontent.com/assets/194400/23248304/97afbf26-f996-11e6-9858-a7c5aea594ef.png)
 
 Connect your Heroku app to the GitHub Repository you created (_by forking_)
 in step 1 (_above_).
 
-Now **Enable Automatic Deploys** to ensure that any changes made on GitHub
-are automatically deploye on Heroku:
+##### Steps:
+
++ Click on the "Connect to GitHub" button
++ Search for the repository `learn-heroku` in our case
++ Click on "Connect" button.
+
+Now click "**Enable Automatic Deploys**" to ensure that
+any changes made on GitHub are automatically deployed on Heroku:
 
 ![enable-automatic-deploys](https://cloud.githubusercontent.com/assets/194400/23248376/fcb091ac-f996-11e6-8b84-8433d6915d4d.png)
 
@@ -88,7 +120,8 @@ are automatically deploye on Heroku:
 Back in GitHub, use the Web user interface (UI) to edit one of the files
 in your fork of `learn-heroku`.
 
-My suggestion is update the version number in the `package.json` file:
+My suggestion is update (_increment_) the version number
+in the `package.json` file:
 
 Click the edit icon: <br />
 ![edit-package-json-button](https://cloud.githubusercontent.com/assets/194400/23248743/e4e94cd8-f998-11e6-98ba-eb6d78ec634f.png)
@@ -115,16 +148,16 @@ That will trigger the Heroku deployment of the Hello World Application!
 > In my case the URL for my app is: https://hello-world-heroku-node.herokuapp.com
 
 You should expect to see: <br />
-![learn-heroku-result](https://cloud.githubusercontent.com/assets/194400/23249056/5490f418-f99a-11e6-9833-1e3b905d9c80.png)
+![learn-heroku-hello-world](https://cloud.githubusercontent.com/assets/194400/23319783/edd7954c-facf-11e6-9059-0862a69e1fd3.png)
 
-#### Congratulations! You just set up your first Heroku App Deployment!
+### Congratulations! You just _deployed_ your first app on Heroku!
 
 
-<br /><br /><br />
+<br /><br /><br /><br /><br /><br />
 
 ### Intermediate: Detailed Step-by-Step Instructions for _Your_ App
 
-> To be added soon!
+> Coming soon!
 
 ### Intermediate: Environment Variables on Heroku
 
@@ -135,11 +168,13 @@ see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-her
 
 A Version of your App for Each Pull Request!
 
-> Help wanted!
+> First ensure that you _understand_ what Continuous Integration is...
+see: https://github.com/dwyl/learn-travis
 
 ### Advanced: Docker Containers
 
-> as suggested by @gabrielperales in https://github.com/dwyl/learn-heroku/issues/2
+> as suggested by @gabrielperales in
+https://github.com/dwyl/learn-heroku/issues/2
 
 ## Background Reading
 
