@@ -271,6 +271,18 @@ Restore the `default` branch for deployment on Heroku:
 ![heroku-deploy-from-master-branch](https://cloud.githubusercontent.com/assets/194400/23308283/a28df9e6-faa2-11e6-8edd-ceeb82a52cfa.png)
 
 
+## Certificate Renewal
+
+Following the instructions in `this` guide:
+https://certbot.eff.org/docs/using.html#renewing-certificates
+
+### x. Disable Any "Build Packs"
+
++ https://github.com/HashNuke/heroku-buildpack-elixir.git
++ https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+
+
+
 <br /> <br /><br /> <br />
 
 
