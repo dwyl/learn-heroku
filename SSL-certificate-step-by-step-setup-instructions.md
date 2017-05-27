@@ -276,10 +276,37 @@ Restore the `default` branch for deployment on Heroku:
 Following the instructions in `this` guide:
 https://certbot.eff.org/docs/using.html#renewing-certificates
 
-### x. Disable Any "Build Packs"
+### 1. _Temporarily_ Disable Any "Buildpacks"
+
+Visit the `Settings` tab for your App in Heroku. <br />
+Scroll down to the `Buildpacks` section. <br />
+Make a note of any buildpacks you
+In the case of our Elixir/Phoenix app these were:
+
+![image](https://cloud.githubusercontent.com/assets/194400/26498450/00137566-4227-11e7-81d3-179b8c6e7608.png)
+
+We copy-paste these into some sort of notepad (_so that we can **restore** them later_)
 
 + https://github.com/HashNuke/heroku-buildpack-elixir.git
 + https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+
+### 2. Repeat Steps 1 - 7 Above to Renew the Certificate.
+
+Here's a quick summary of the steps:
+
+1. Re-run the `certbot` CLI tool.
+2. Copy-paste the `printf` command (_step 4.2 above_)
+3. `git add . && git commit -m 'adds letsencrypt verification token'`
+4. `git push` the `letsencrypt-temporary-server` branch of `learn-heroku`
+(_to your project's github repo_)
+2. Push the
+
+### 3. Copy the Cert into Clipboard
+
+sudo cat /etc/letsencrypt/keys/0002_key-certbot.pem | pbcopy
+
+sudo cat /etc/letsencrypt/live/healthlocker.uk/fullchain.pem | pbcopy
+
 
 
 
