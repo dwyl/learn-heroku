@@ -92,7 +92,8 @@ You should now see something similar to this:
 Visit: https://dashboard.heroku.com/new and create your new app. <br />
 _example_: <br />
 ![create-new-app](https://cloud.githubusercontent.com/assets/194400/23212611/6881bd72-f8ff-11e6-8c00-6ddf4c97c3ef.png) <br />
-(_you will need to give your app a different name. all heroku apps are unique._)
+(_you will need to give your app a **different name**;
+  all heroku apps are **unique**._)
 
 
 #### 3. Use Heroku (Web) UI to Deploy the Application
@@ -183,13 +184,15 @@ https://github.com/dwyl/learn-heroku/issues/2
 
 ## Frequently Asked/Ansered Questions (FAQ)
 
-### Isn't Heroku "_Expensive_" for CPU/RAM You're Getting?
+### Isn't Heroku "_Expensive_" for the CPU/RAM You're Getting?
 
 Heroku costs more per unit of computing resource than the equivalent
-_infrastructure_ provider (_e.g: AWS/GoogleCloud/Azure/etc_)
-but it's cheap if you factor developer's time as your biggest cost!
+_infrastructure_ provider
+(_e.g: AWS / DigitalOcean / GoogleCloud / Azure / etc._)
+but it's _cheap_ if you factor ***developer's time***
+as your **biggest cost/constraint**! <br />
 Setting up deployment to AWS with all the benefits/features Heroku has
-out-of-the-box will take hours. So unless your developer's time is _free_
+out-of-the-box will take _hours_. So unless your developer's time is _free_
 _or_ you _are_ the developer and want to spend a day on deployment
 instead of building features to solve the end-user's problem,
 use Heroku and focus on _building_ the product! <br />
