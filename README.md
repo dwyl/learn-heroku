@@ -154,17 +154,17 @@ You should expect to see: <br />
 ### Congratulations! You just _deployed_ your first app on Heroku!
 
 
-<br /><br /><br /><br /><br /><br />
+<br /><br /><br />
 
-### Intermediate: Detailed Step-by-Step Instructions for _Your_ App
+### Intermediate: Detailed Step-by-Step Instructions a "Real" App
 
-> Coming soon!
+
 
 ### Intermediate: Environment Variables on Heroku
 
 see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
 
-
+<!--
 ### Advanced: Continuous Integration
 
 A Version of your App for Each Pull Request!
@@ -176,6 +176,8 @@ see: https://github.com/dwyl/learn-travis
 
 > as suggested by @gabrielperales in
 https://github.com/dwyl/learn-heroku/issues/2
+
+-->
 
 ## Background Reading
 
