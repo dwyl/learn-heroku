@@ -33,7 +33,7 @@ both simple and advanced topics!
 + ***Continuous Deployment*** is easy from a GitHub repository using "Hooks".
 (_see step-by-step tutorial below!_)
 
-+ Great Range of of "**Addon Services**" you can use with your app
++ Great Range of "**Addon Services**" you can use with your app
 in a couple of clicks (_e.g: PostgreSQL, ElasticSearch, Monitoring etc._) <br />
 and most have a "free tier"
 so you can get started without spending a penny!
@@ -60,7 +60,7 @@ an app!
 
 ### Beginner: Basic Heroku Deployment of Node.JS App in 5 Minutes
 
-#### Pre-requisites:
+#### Pre-requisites:
 + **Computer** with a ***Web Browser***
 + **Internet Connection**
 + ***GitHub Account*** ... if you don't have one see:
@@ -92,7 +92,8 @@ You should now see something similar to this:
 Visit: https://dashboard.heroku.com/new and create your new app. <br />
 _example_: <br />
 ![create-new-app](https://cloud.githubusercontent.com/assets/194400/23212611/6881bd72-f8ff-11e6-8c00-6ddf4c97c3ef.png) <br />
-(_you will need to give your app a different name. all heroku apps are unique._)
+(_you will need to give your app a **different name**;
+  all heroku apps are **unique**._)
 
 
 #### 3. Use Heroku (Web) UI to Deploy the Application
@@ -153,17 +154,17 @@ You should expect to see: <br />
 ### Congratulations! You just _deployed_ your first app on Heroku!
 
 
-<br /><br /><br /><br /><br /><br />
+<br /><br /><br />
 
-### Intermediate: Detailed Step-by-Step Instructions for _Your_ App
+### Intermediate: Detailed Step-by-Step Instructions a "Real" App
 
-> Coming soon!
+See: [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blob/master/elixir-phoenix-app-deployment.md)
 
 ### Intermediate: Environment Variables on Heroku
 
-see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
+See: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
 
-
+<!--
 ### Advanced: Continuous Integration
 
 A Version of your App for Each Pull Request!
@@ -176,6 +177,8 @@ see: https://github.com/dwyl/learn-travis
 > as suggested by @gabrielperales in
 https://github.com/dwyl/learn-heroku/issues/2
 
+-->
+
 ## Background Reading
 
 - https://devcenter.heroku.com/articles/getting-started-with-nodejs
@@ -183,13 +186,15 @@ https://github.com/dwyl/learn-heroku/issues/2
 
 ## Frequently Asked/Ansered Questions (FAQ)
 
-### Isn't Heroku "_Expensive_" for CPU/RAM You're Getting?
+### Isn't Heroku "_Expensive_" for the CPU/RAM You're Getting?
 
 Heroku costs more per unit of computing resource than the equivalent
-_infrastructure_ provider (_e.g: AWS/GoogleCloud/Azure/etc_)
-but it's cheap if you factor developer's time as your biggest cost!
+_infrastructure_ provider
+(_e.g: AWS / DigitalOcean / GoogleCloud / Azure / etc._)
+but it's _cheap_ if you factor ***developer's time***
+as your **biggest cost/constraint**! <br />
 Setting up deployment to AWS with all the benefits/features Heroku has
-out-of-the-box will take hours. So unless your developer's time is _free_
+out-of-the-box will take _hours_. So unless your developer's time is _free_
 _or_ you _are_ the developer and want to spend a day on deployment
 instead of building features to solve the end-user's problem,
 use Heroku and focus on _building_ the product! <br />
