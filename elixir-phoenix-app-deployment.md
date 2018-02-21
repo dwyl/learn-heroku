@@ -5,12 +5,18 @@
 
 ## Why?
 
-You want to deploy your Web Application with Database.
+You want to deploy your Web Application with Database to Heroku
+as _fast_ as possible while still _understanding_ all the steps!
 
 
 ## What?
 
 A _step-by-step_ guide to deploying a (Phoenix) Web App on Heroku.
+
+We _created_ this walkthrough/tutorial while _deploying_ our
+"beginner phoenix example":
+https://github.com/dwyl/phoenix-chat-example <br />
+So we _know_ it works! Try it: https://phxchat.herokuapp.com
 
 > _**Note**: most of this is applicable to **any** App_
 (_Node.js, Python, Ruby, etc._) <br />
@@ -23,7 +29,7 @@ _Anyone_ who wants a _quick, easy and "**free**"_
 way to _deploy_ a demo app!
 
 
-## How?
+## _How_?
 
 _First_, let's do the setup on Heroku:
 
@@ -122,8 +128,11 @@ create a file called `Procfile`
 _Paste_ this line in the file:
 
 ```sh
-web: MIX_ENV=prod POOL_SIZE=2 mix ecto.migrate && mix.phoneix.server
+web: MIX_ENV=prod mix ecto.migrate && mix phx.server
 ```
+That will ensure that your database tables/schema is up-to-date
+_before_ trying to launch the app.
+
 
 ### 7. Update Your `prod.exs` File
 
@@ -194,9 +203,118 @@ becomes:
 # import_config "prod.secret.exs"
 ```
 
+### 8. Generate the `SECRET_KEY_BASE` String
 
+The `SECRET_KEY_BASE` is the key that your app will use to
+digitally sign request tokens. It's vital to keep it a _secret_
+to avoid "_compromising_" your app.
+Therefore we will store it in an Environment Variable on Heroku.
+
+#### 8.1 Run the `mix phx.gen.secret` Command
+
+On your `localhost` (_terminal_), run the following command:
+```sh
+mix phx.gen.secret
+```
+That will output a **64 character** String such as:
+```
+khaO4IJvSa+AFJHGFzlsgVlOuNNLgrUg9D4PCD943tKqersy3YNtABh/zmqd/v7y
+```
+_Copy_ that string to your clipboard.
+(_we will use it in the next step_)
+
+#### 8.2 Define the `SECRET_KEY_BASE` Environment Variable on Heroku
+
+> _**Note**: if you are `new` to Environment Variables,
+we recommend you read our "**complete beginner**" **tutorial**_:
+[github.com/dwyl/**learn-environment-variables**](https://github.com/dwyl/learn-environment-variables)
+
+Open the "Settings" Tab of your App's Heroku Dashboard:
+![heroku-settings-tab](https://user-images.githubusercontent.com/194400/36446677-fe75289e-1679-11e8-9ec0-d5fe28cca26a.png)
+
+Now _scroll_ down to the "Config Variables"
+and click on the "***Reveal Config Vars***" button:
+
+![heroku-reveal-config-variables](https://user-images.githubusercontent.com/194400/36446776-48e847bc-167a-11e8-9118-43c06b65dde8.png)
+
+This will display your _existing_ variable `DATABASE_URL`
+and allow the creation of new Environment Variables.
+
+![heroku-add-secret_key_base-config-var](https://user-images.githubusercontent.com/194400/36446972-dfc41e4a-167a-11e8-82cf-509f9fc53632.png)
+
+1. **Set** the "key" for the variable: `SECRET_KEY_BASE`
+2. **Paste** the value generated in step 8.1 (_above_)
+3. **Click** the "Add" button
+
+
+### 9. Add the Elixir "Buildpack"
+
+Still in the "Settings" Tab of the Heroku Dashboard for the App,
+Scroll down to the "**Buildpacks**" section:
+
+![heroku-add-buildpacks](https://user-images.githubusercontent.com/194400/36447145-63574cc8-167b-11e8-8671-db1b6f208669.png)
+
+Click on the "Add buildpack" button.
+
+> A "Buildpack" tells Heroku _how_ to run your app.
+> In the case of an elixir app it defines how to get the dependencies
+and what the app expects/requires. <br />
+For more detail, see: https://devcenter.heroku.com/articles/buildpacks
+
+When the "Modal" opens:
+
+![heroku-add-elixir-buildpack](https://user-images.githubusercontent.com/194400/36447345-098f6fb2-167c-11e8-8413-61c7b1164fc5.png)
+
+1. Paste the value:
+https://github.com/HashNuke/heroku-buildpack-elixir.git
+into the field.
+2. Click on "Save change" button
+
+You should now see the following:
+
+![heroku-buildpack-added](https://user-images.githubusercontent.com/194400/36447410-41416f78-167c-11e8-86c3-57f7f7c86195.png)
+
+#### 9.1 _Repeat_
+
+In order to compile any "_static assets_" (JS/etc.)
+we need to add a _second_ buildpack:
+https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+
+Repeat the process you just went through but this time
+add the `heroku-buildpack-phoenix-static` buildpack.
+
+Great! Now onto the _final_ step!
+
+### 10. (_Manually_) Deploy
+
+> _Don't worry_, you only have to do this _once_. <br />
+All _subsequent_ deploys are automatic!
+
+Back on the "Deploy" tap of your App's Dashboard,
+Scroll down to the "Manual deploy" section:
+
+![heroku-manual-deploy](https://user-images.githubusercontent.com/194400/36447781-5229282a-167d-11e8-956b-aed5acc9c15f.png)
+
+Click on the "**Deploy Brach**" button.
+
+This will _start_ the build process.
+Heroku will show you the "build log":
+
+![heroku-build-log](https://user-images.githubusercontent.com/194400/36447871-9b051252-167d-11e8-8c18-c04e6deac7d4.png)
+
+Once the build is complete,
+click on the "Open App" button in the top-right of your Heroku dashboard:
+![open-app](https://user-images.githubusercontent.com/194400/36480033-bb4bbff4-1702-11e8-8b78-76c97518702a.png)
+
+You should see _your_ app running in the browser!
+
+In _our_ case the app is: https://phxchat.herokuapp.com
+![phxchat](https://user-images.githubusercontent.com/194400/36480000-9c6fe768-1702-11e8-86d6-c8703883096c.png)
+
+`done()`
 
 <br /> <br />
+
 
 ### Why _Not_ use the "Official" Deployment Guide?
 
