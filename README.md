@@ -158,11 +158,11 @@ You should expect to see: <br />
 
 ### Intermediate: Detailed Step-by-Step Instructions a "Real" App
 
-
+See: [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blob/master/elixir-phoenix-app-deployment.md)
 
 ### Intermediate: Environment Variables on Heroku
 
-see: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
+See: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
 
 <!--
 ### Advanced: Continuous Integration
