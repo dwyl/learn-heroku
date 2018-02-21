@@ -33,7 +33,7 @@ both simple and advanced topics!
 + ***Continuous Deployment*** is easy from a GitHub repository using "Hooks".
 (_see step-by-step tutorial below!_)
 
-+ Great Range of of "**Addon Services**" you can use with your app
++ Great Range of "**Addon Services**" you can use with your app
 in a couple of clicks (_e.g: PostgreSQL, ElasticSearch, Monitoring etc._) <br />
 and most have a "free tier"
 so you can get started without spending a penny!
