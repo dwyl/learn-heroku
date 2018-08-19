@@ -115,7 +115,7 @@ create a file called `elixir_buildpack.config`
 _Paste_ the following lines into the file:
 ```yml
 erlang_version=20.1
-elixir_version=1.5.0
+elixir_version=1.6.0
 always_rebuild=false
 runtime_path=/app
 ```
