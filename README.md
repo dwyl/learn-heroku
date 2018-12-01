@@ -164,6 +164,34 @@ See: [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blo
 
 See: [github.com/dwyl/learn-environment-variables#**environment-variables-on-heroku**](https://github.com/dwyl/learn-environment-variables#environment-variables-on-heroku)
 
+### Intermediate: Using a Custom Domain Name on Heroku
+
+To use a custom domain name on your heroku app, the first thing to do is to purchase your domain name. There are a number of services you can use for this (we like [iwantmyname.com](https://iwantmyname.com)).
+
+The next step is to add this domain to your heroku app. You can do this using the command line interface, or the settings dashboard on heroku.com.
+
+<img width="500" alt="heroku dashboard - domains and certificates" src="https://user-images.githubusercontent.com/8939909/49329458-08104f00-f577-11e8-989e-2d3ebf9c5d7b.png">
+
+Once you've added your domain, you should see a DNS target:
+
+<img width="400" alt="heroku - dns target" src="https://user-images.githubusercontent.com/8939909/49329486-9684d080-f577-11e8-9c11-ad1fdba34a2d.png">
+
+This is what you need to give to your DNS provider (which is most likely the site you purchased your domain from).
+
+If your domain starts with `www.`, you will need to add the DNS target as a `CNAME` record with a name of `www`
+
+If your domain just consists of the domain name and the top level domain (eg. `github.com` instead of `www.github.com`; This is known as the root domain), you might be able to add it as a `CNAME`, but will most likely need to add it as an `ANAME` or an `ALIAS` record. In this case, either leave the name blank, or use `@`
+
+Some services will not allow you to add the root domain as a `CNAME`, and will not have `ANAME` or `ALIAS` as an option, instead requiring you to give an IP address as the `A` record. This is not possible with heroku, as they use dynamic IP addresses, meaning they will change regularly and your DNS record will no longer be correct.
+
+However, if you still want people to be able to access your site using the root domain, there are still a few things you can do.
+
+Some services (iwantmyname.com included) have a feature where they will automatically configure DNS records for popular web services (tumblr, squarespace, heroku etc.).
+
+Another alternative is to just add the `www` DNS record, and to add a redirect (it may also be known as forwarding) from your root domain to that. This does mean that the `www` will show in the browser address bar, but both addresses will lead to your site.
+
+See the [heroku docs](https://devcenter.heroku.com/articles/custom-domains) or your DNS providers help page for specific instructions.
+
 <!--
 ### Advanced: Continuous Integration
 
