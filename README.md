@@ -6,7 +6,7 @@
 
 You know how to _create_ a web application,
 but that knowledge is only _useful_
-if you how to _show_ the app to people!
+if you know how to _show_ the app to people!
 
 ## What?
 
