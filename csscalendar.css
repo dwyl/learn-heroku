@@ -1,0 +1,442 @@
+body {
+    font-family: Arial;
+}
+.wrapper {
+    position: relative;
+    width: 100%;    
+}
+#organizerContainer {
+    display: none;
+}
+#calendarContainer {
+    width: 100%;
+    display: inline-block;
+}
+.modal-event {
+    display: none;
+}
+.modal-event {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    top: 0;
+    background: rgba(0,0,0,.5);
+}
+.add-event {
+    background: #fff;
+    border-radius: 4px;
+    position: absolute;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+    left: 0;
+    right: 0;
+    top: 20%;
+    padding: 20px;
+}
+.add-event h4 {
+    margin-top: 0;
+    border-bottom: 1px solid #cccc;
+    padding-bottom: 5px;
+}
+.fields {
+    margin-bottom: 6px;
+}
+.fields label {
+    min-width: 120px;
+    display: inline-block;
+}
+.fields input {
+    font-size: 12px;
+    width: 100%;
+    padding: 10px;
+}
+.btn-list {
+    margin-top: 10px;
+    text-align: right;
+}
+button.baten {
+    background: #ffa100;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 20px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.box-calendar {
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+            flex-direction: column;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    -webkit-transform: scale(1);
+     -ms-transform: scale(1);
+         transform: scale(1);
+    -webkit-box-shadow: 0px 0px 4px rgba(21, 21, 21, 0.21);
+            box-shadow: 0px 0px 4px rgba(21, 21, 21, 0.21);
+    -ms-user-select: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.box-calendar.list-size-medium {
+    width: 600px;
+    height: 600px;
+}
+
+.box-calendar.list-size-large {
+    width: 800px;
+    height: 800px;
+}
+
+.list-year {
+    width: calc(100% - 10px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.list-year > span {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+            align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    text-transform: uppercase;
+}
+
+.list-year > div {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-line-pack: center;
+            align-content: center;
+}
+
+.list-month {
+    z-index: 1;
+    width: calc(100% - 10px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    padding: 20px 5px;
+    font-size: 40px;
+    -webkit-box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.12);
+            box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.12);
+}
+
+.list-month > span {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+            align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    text-transform: uppercase;
+}
+
+.list-month > div {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-line-pack: center;
+            align-content: center;
+}
+
+.list-labels {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+            flex-direction: row;
+}
+
+.list-labels > span {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+            align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    padding: 10px;
+}
+
+.list-days {
+    background-color: #F6F6F6;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-shadow: 0px 2px 6px -2px rgba(21, 21, 21, 0.21);
+            box-shadow: 0px 2px 6px -2px rgba(21, 21, 21, 0.21);
+}
+
+.list-row {
+    width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+            flex-direction: row;
+}
+
+.list-day {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+            flex: 1;
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+            flex-direction: row;
+    border-bottom: 1px solid rgba(21, 21, 21, .12);
+    border-right: 1px solid rgba(21, 21, 21, .12);
+    -webkit-transition: box-shadow 200ms ease-in-out;
+    -webkit-transition: -webkit-box-shadow 200ms ease-in-out;
+    transition: -webkit-box-shadow 200ms ease-in-out;
+    -o-transition: box-shadow 200ms ease-in-out;
+    transition: box-shadow 200ms ease-in-out;
+    transition: box-shadow 200ms ease-in-out, -webkit-box-shadow 200ms ease-in-out;
+}
+
+.list-day:last-child {
+    border-right: none;
+}
+
+.list-day:hover {
+    background-color: rgba(21, 21, 21, 0.012);
+    -webkit-box-shadow: inset 0px 0px 4px rgba(21, 21, 21, 0.21);
+            box-shadow: inset 0px 0px 4px rgba(21, 21, 21, 0.21);
+}
+
+.list-day-radios {
+    display: none;
+}
+
+.list-day-radios:checked+.list-day {
+    background-color: rgba(21, 21, 21, 0.012);
+    -webkit-box-shadow: inset 0px 0px 4px rgba(21, 21, 21, 0.21);
+            box-shadow: inset 0px 0px 4px rgba(21, 21, 21, 0.21);
+}
+
+.list-day > .list-day-num {
+    width: auto;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    font-size: 14px;
+    color: rgba(21, 21, 21, 0.84);
+}
+    .list-day.list-day-today > .list-day-num {
+        padding-bottom: 3px;
+        border-bottom: 2px solid;
+        border-radius: 1px;
+    }
+.list-day > .list-day-indicator {
+    font-size: 0px;
+    position: absolute;
+    border-radius: 100%;
+    -webkit-box-shadow: 0px 2px 4px rgba(21, 21, 21, 0.21);
+            box-shadow: 0px 2px 4px rgba(21, 21, 21, 0.21);
+}
+
+.list-indicator-type-numeric {
+    padding: 3px;    
+    display: -webkit-box;    
+    display: -ms-flexbox;    
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.list-day.list-day-diluted {
+    background-color: rgba(21, 21, 21, 0.021);
+    -webkit-box-shadow: inset 0px 0px 1px rgba(21, 21, 21, 0.12);
+            box-shadow: inset 0px 0px 1px rgba(21, 21, 21, 0.12);
+}
+
+.list-day.list-day-diluted > .list-day-num {
+    width: auto;
+    font-size: 10px;
+    color: rgba(21, 21, 21, 0.73);
+}
+
+.list-day-indicator:empty,
+.list-day.list-day-diluted > .list-day-indicator {
+    display: none !important;
+}
+
+.box-calendar.list-size-small .list-day > .list-day-indicator {
+    width: 8px;
+    height: 8px;
+    bottom: 7px;
+    right: 7px;
+}
+    .box-calendar.list-size-small .list-day > .list-indicator-type-numeric {
+        font-size: 7px;
+    }
+    .box-calendar.list-size-small .list-day > .list-indicator-pos-top {
+        top: 7px;
+        bottom: unset;
+    }
+
+.box-calendar.list-size-medium .list-day > .list-day-indicator {
+    width: 18px;
+    height: 18px;
+    bottom: 10px;
+    right: 10px;
+}
+    .box-calendar.list-size-medium .list-day > .list-indicator-type-numeric {
+        font-size: 10px;
+    }
+    .box-calendar.list-size-medium .list-day > .list-indicator-pos-top {
+        top: 10px;
+        bottom: unset;
+    }
+
+.box-calendar.list-size-large .list-day > .list-day-indicator {
+    width: 24px;
+    height: 24px;
+    bottom: 14px;
+    right: 14px;
+}
+    .box-calendar.list-size-large .list-day > .list-indicator-type-numeric {
+        font-size: 12px;
+    }
+    .box-calendar.list-size-large .list-day > .list-indicator-pos-top {
+        top: 14px;
+        bottom: unset;
+    }
+ul.list-event {
+    list-style: none;
+    padding: 0;
+    margin-top: 27px;
+}
+ul.list-event.has-list li {
+    font-size: 8px;
+    background: #fff;
+    margin-bottom: 2px;
+    padding: 5px;
+    position: relative;
+}
+ul.list-event.has-list li span.hapus {
+    display: block;
+    font-size: 11px;
+    position: absolute;
+    left: -16px;
+    top: 2px;
+    background: #f00;
+    border-radius: 15px;
+    padding: 0px 3px;
+    z-index: 999;
+    width: 8px;
+    height: 14px;
+}
+ul.list-event.has-list li span.hapus:before {
+    content: 'X';
+    display: block;
+}
+span.add-event-hidden {
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.list-events {
+    display: none;
+}
+

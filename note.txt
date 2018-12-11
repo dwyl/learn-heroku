@@ -1,0 +1,6 @@
+Supaya Aplikasi Calendar Berjalan, lakukan dulu setup dibawah ini:
+1. Setup database di folder ajax/Database.php, sesuaikan constanta dengan setup server Anda.
+2. Buat table dengan hit ajax/CreateTable.php,
+	ex: pada browser hit http://localhost/calendar/ajax/CreateTable.php
+3. Buka aplikasi calendar dengan hit index.html
+	ex: pada browser hit http://localhost/calendar/index.html

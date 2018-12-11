@@ -1,21 +1,336 @@
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Heroku - Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-<style>
-h1 {
-  color: teal;
-  border: 3px teal solid;
-  font-size: 6em;
-  padding: 1em;
-  margin: 0.5em;
-  text-align: center;
-  font-family: sans-serif;
-}
-</style>
-  </body>
+
+	<head>
+		<title>Calendar</title>
+		<link href="csscalendar.css" rel="stylesheet">
+		<script src="jquery.js"></script>
+		<script src="jscalendar.js"></script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div id="calendarContainer">
+			</div>
+			<div id="organizerContainer">
+			</div>
+			<div class="modal-event new-event">
+				<form id="event-form">
+					<div class="add-event">
+						<h4>Add Event</h4>
+						<input id="inputdate" type="text" name="date" hidden="">
+						<div class="fields">
+							<label>Event Name</label>
+							<input type="text" name="event-name">
+						</div>
+						<div class="fields">
+							<label>Start Time</label>
+							<input type="text" name="start-time">
+						</div>
+						<div class="fields">
+							<label>End Time</label>
+							<input type="text" name="end-time">
+						</div>
+						<div class="fields">
+							<label>Invitees Email</label>
+							<input type="email" name="email">
+						</div>
+						<div class="btn-list">
+							<button class="btn-cancel baten">Cancel</button>
+							<button class="btn-add baten">Add</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-event update-event">
+				<form id="event-form-update">
+					<div class="add-event">
+						<h4>Update Event</h4>
+						<input id="date" type="text" name="date">
+						<input type="text" name="id">
+						<div class="fields">
+							<label>Event Name</label>
+							<input type="text" name="event-name">
+						</div>
+						<div class="fields">
+							<label>Start Time</label>
+							<input type="text" name="start-time">
+						</div>
+						<div class="fields">
+							<label>End Time</label>
+							<input type="text" name="end-time">
+						</div>
+						<div class="fields">
+							<label>Invitees Email</label>
+							<input type="email" name="email">
+						</div>
+						<div class="btn-list">
+							<button class="btn-cancel baten">Cancel</button>
+							<button class="btn-update baten">Update</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script>
+			"use strict";
+
+			// function that creates dummy data for demonstration
+			function createData() {
+				var date = new Date();
+				var data = {};
+				for (var i = 0; i < 10; i++) {
+					data[date.getFullYear() + i] = {};
+
+					for (var j = 0; j < 12; j++) {
+						data[date.getFullYear() + i][j + 1] = {};
+					}
+				}
+
+				$.ajax({
+			    type: 'get',
+			    dataType: 'json',
+			    url: 'ajax/get.php'
+			    }).done(function (dataget) {
+			        $.each(dataget, function (i, item) {
+			        	
+			        	var idate = item.date;
+			        	var tanggal = idate.split('-');
+			        	var year = tanggal[0];
+			        	var month = tanggal[1];
+			        	var day = tanggal[2];
+			        	try {
+			        		data[year][month][day].push({
+			        			id : item.id,
+								startTime: item.start_time,
+								endTime: item.end_time,
+								text: item.event_name,
+								email: item.email
+							});
+			        	}catch (e){
+			        		data[year][month][day] = [];
+			        		data[year][month][day].push({
+			        			id : item.id,
+								startTime: item.start_time,
+								endTime: item.end_time,
+								text: item.event_name,
+								email: item.email
+							});
+			        	}
+			        });
+			    });
+				return data;
+			}
+
+			var data = createData();
+
+			
+			var calendar = new Calendar("calendarContainer", 
+				"small",
+				[
+					"Wednesday",
+					3
+				], [
+					"#f00", 
+					"#14ca98", 
+					"#ffffff", 
+					"#000" 
+				],
+				{
+					placeholder: "<button style='width: calc(100% - 16px); background-color: #E6E6E6; border-radius: 6px; margin: 8px; border: none; padding: 12px 0px; cursor: pointer;'>Add New Event</button>",
+					indicator: true,
+					indicator_type: 0,
+					indicator_pos: "top" 
+				}
+			);
+
+			jQuery(document).ready(function() {
+				var organizer = new Organizer("calendarContainer", 
+					calendar, 
+					data 
+				);
+				appendData("calendarContainer",data);
+			});
+		</script>
+		<script>
+			function appendData(id,data){
+		        var year = $("#"+id+"-year").text();
+		        var month = this.getMonth($("#"+id+"-month").text());
+		        $("."+id+".list-day-listed").each(function(){
+		        	var eventItems = $(this).find(".list-event");
+		        	eventItems.empty();
+		            var dayNum = $(this).find(".list-day-num").text();
+		            if(dayNum.length==1){
+		            	day = "0"+dayNum;
+		            } else {
+		            	day = ""+dayNum;
+		            }
+		            if (day in data[year][month]){
+		            	eventItems.removeClass("has-list");
+		            	console.log(day);
+		                $.each(data[year][month][day], function( i, item ) {
+		                	var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+		                	var eventItem = "<li class='event-item' style='background: "+randomColor+";'><span class='hapus' onclick=removeData("+item.id+")></span>"+"<span class='data-event' onclick=showUpdateModal("+item.id+")>"+item.startTime+"-"+item.endTime+" : "+item.text+"</span></li>"
+		                    eventItems.append(eventItem);
+		                    console.log(item);
+		                });
+		                eventItems.addClass("has-list");
+		            }
+		        });
+		    }
+
+		    function reAppendData(){
+		    	var date = new Date();
+				var data = {};
+				for (var i = 0; i < 10; i++) {
+					data[date.getFullYear() + i] = {};
+
+					for (var j = 0; j < 12; j++) {
+						data[date.getFullYear() + i][j + 1] = {};
+					}
+				}
+
+				$.ajax({
+			    type: 'get',
+			    dataType: 'json',
+			    url: 'ajax/get.php'
+			    }).done(function (dataget) {
+			        $.each(dataget, function (i, item) {
+			        	var idate = item.date;
+			        	var tanggal = idate.split('-');
+			        	var year = tanggal[0];
+			        	var month = tanggal[1];
+			        	var day = tanggal[2];
+			        	try {
+			        		data[year][month][day].push({
+			        			id : item.id,
+								startTime: item.start_time,
+								endTime: item.end_time,
+								text: item.event_name,
+								email: item.email
+							});
+			        	}catch (e){
+			        		data[year][month][day] = [];
+			        		data[year][month][day].push({
+			        			id : item.id,
+								startTime: item.start_time,
+								endTime: item.end_time,
+								text: item.event_name,
+								email: item.email
+							});
+			        	}
+			        });
+			        var organizer = new Organizer("calendarContainer", 
+							calendar, 
+							data 
+						);
+			        console.log(data);
+			        appendData("calendarContainer",data);
+			    });
+		    }
+
+		    function getMonth(name){
+		        var result = false;
+		        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		        $.each(months, function( index, value ) {
+		            if (value == name){
+		                result = (index+1);
+		            }
+		        });
+		        return result;
+		    }
+
+		    function removeData(id) {
+		        var formData = {
+		            'id': id
+		        };
+
+		        $.ajax({
+		            type: 'POST',
+		            url: 'ajax/delete.php',
+		            data: formData,
+		            dataType: 'json',
+		            encode: true
+		        })
+		            .done(function (data) {
+		                console.log(data);
+		             	reAppendData();
+		            });
+		    }
+
+		    function showUpdateModal(id){
+
+		        $.ajax({
+		            type: 'GET',
+		            url: 'ajax/getbyid.php?id='+id,
+		            dataType: 'json',
+		            encode: true
+		        })
+		            .done(function (data) {
+		            	console.log(data);
+		            	$(".update-event").show();
+		            	$("#event-form-update input[name=id]").val(id);
+		            	$('#event-form-update input[name=date]').val(data.date);
+		                $('#event-form-update input[name=start-time]').val(data.start_time);
+		                $('#event-form-update input[name=end-time]').val(data.end_time);
+		                $('#event-form-update input[name=event-name]').val(data.event_name);
+		                $('#event-form-update input[name=email]').val(data.email);
+		                
+		            });
+		    }
+
+		    $(document).ready(function () {
+		        
+		        $('#event-form .btn-add').on("click",function (event) {
+		        	event.preventDefault();
+		            var formData = {
+		                'date': $('#event-form input[name=date]').val(),
+		                'start_time': $('#event-form input[name=start-time]').val(),
+		                'end_time': $('#event-form input[name=end-time]').val(),
+		                'event_name': $('#event-form input[name=event-name]').val(),
+		                'email': $('#event-form input[name=email]').val()
+		            };
+
+		            $.ajax({
+		                type: 'POST',
+		                url: 'ajax/post.php',
+		                data: formData,
+		                dataType: 'json',
+		                encode: true
+		            })
+		                .done(function (data) {
+		                    console.log(data);
+		                    reAppendData();
+		                    jQuery(".modal-event").hide();
+		                    
+		                });
+		        });
+		       	$('#event-form-update .btn-update').on("click",function (event) {
+		        	event.preventDefault();
+		            var formData = {
+		            	'id': $('#event-form-update input[name=id]').val(),
+		                'date': $('#event-form-update input[name=date]').val(),
+		                'start_time': $('#event-form-update input[name=start-time]').val(),
+		                'end_time': $('#event-form-update input[name=end-time]').val(),
+		                'event_name': $('#event-form-update input[name=event-name]').val(),
+		                'email': $('#event-form-update input[name=email]').val()
+		            };
+
+		            $.ajax({
+		                type: 'POST',
+		                url: 'ajax/post.php',
+		                data: formData,
+		                dataType: 'json',
+		                encode: true
+		            })
+		                .done(function (data) {
+		                    console.log(data);
+		                    reAppendData();
+		                    jQuery(".modal-event").hide();
+		                    
+		                });
+		        });
+		    });
+		</script>
+	</body>
+
 </html>
