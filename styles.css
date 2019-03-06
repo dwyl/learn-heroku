@@ -5,6 +5,34 @@ body {
 	font-family: 'Poppins', sans-serif;
 }
 
+.bouncybox {
+  height: 100px;
+  width: 40px;
+  margin-left: 20px;
+}
+
+.bouncy {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #ecf0f1;
+  animation: bouncy 1.2s infinite ease-in-out;
+}
+
+@keyframes bouncy {
+  40% {
+    height: 40px;
+  }
+  50% {
+    transform: translate(0, 65px);
+    height: 34px;
+    border-radius: 20px;
+  }
+  65% {
+    height: 40px; 
+  }
+}
+
 #fixed_header_area {
 	position: fixed;
 	z-index: 10;
