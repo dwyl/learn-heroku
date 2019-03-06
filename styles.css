@@ -15,7 +15,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background: #ecf0f1;
+  background: #fff;
   animation: bouncy 1.2s infinite ease-in-out;
 }
 
