@@ -10,6 +10,7 @@
       var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
       var onLoaded = document.getElementById('onLoaded');
+      var progress = document.getElementsByClassName('bouncybox')[0];
       var authorizeButton = document.getElementById('sign_in_btn');
       var signoutButton = document.getElementById('sign_out_btn');
       var menuBtn = document.getElementById('menu');
