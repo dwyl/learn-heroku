@@ -1,3 +1,18 @@
+//Random Greeting
+randomGreeting();
+function randomGreeting() {
+      var msg = document.getElementById('login_title');
+      var randomMSG = ["Ahoi!", "Hello,", "Yo!", "Hi"];
+      var min=0; 
+      var max=randomMSG.length;  
+      var random = Math.floor(
+        Math.random() * (+max - +min)
+      ) + +min;
+
+      msg.innerText = randomMSG[random];
+}
+
+
 // Client ID and API key from the Developer Console
       var CLIENT_ID = '929069745301-7c7p3kv04nnqlck4iommqbd94op1irkq.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyCYjjoLglFHnxywR6QxPs7IDJQFfKFp0Xs';
@@ -153,4 +168,5 @@
       function toggleMenu() {
         var fx = document.getElementById('fixed_header_area');
         fx.style.display = (fx.style.display=="none") ? 'block':'none';
+        randomGreeting();
       }
