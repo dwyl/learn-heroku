@@ -1,21 +1,44 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Heroku - Hello World!</title>
-  </head>
-  <body>
-    <h1>Booooo!</h1>
-<style>
-h1 {
-  color: teal;
-  border: 3px teal solid;
-  font-size: 6em;
-  padding: 1em;
-  margin: 0.5em;
-  text-align: center;
-  font-family: sans-serif;
-}
-</style>
-  </body>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+  	<title>My Site Title</title>
+  	<meta name="description" content="A new site">
+  	<meta name="author" content="Michael Catterall">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div id="fixed_header_area">
+		<img src="close.png" id="menu" Onclick="toggleMenu()" style="display: none;">
+		<h1 id="login_title">Hello,</h1>
+		<p class="login_subtitle isLoggedOut">Please login to your Google account to continue.</p>
+		<p class="login_subtitle isLoggedIn">Please logout to protect sensitive data.</p>
+		<button id="sign_in_btn">Sign In</button>
+		<button id="sign_out_btn">Sign Out</button>
+		<pre id="content" style="white-space: pre-wrap;"></pre>
+	</div>
+
+	<div id="header_area">
+		<img src="menu.png" id="menu" Onclick="toggleMenu()">
+		<input type="text" id="search" class="header_area_input" placeholder="Find something" onkeyup="searchFunction()" />
+	</div>
+	<div id="different_states">
+		<p id="state_title">Different states:</p>
+		<button class="different_states_btn invite_recieved">Invite Recieved</button>
+		<button class="different_states_btn preview_sent">Preview Sent</button>
+		<button class="different_states_btn updates_pending">Updates Pending</button>
+		<button class="different_states_btn published">Published</button>
+	</div>
+	<table id="results_section">
+	</table>
+	<script async defer src="https://apis.google.com/js/api.js"
+	  onload="this.onload=function(){};handleClientLoad()"
+	  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+	</script>
+	<script src="script.js"></script>
+</body>
 </html>
