@@ -39,7 +39,7 @@
         }).then(function () {
           // Listen for sign-in state changes.
 
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+          //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
           onLoaded.style.display = "block";
           progress.style.display = "none";
           // Handle the initial sign-in state.
