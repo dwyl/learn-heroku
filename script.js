@@ -9,6 +9,7 @@
       // included, separated by spaces.
       var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
+      var onLoaded = document.getElementById('onLoaded');
       var authorizeButton = document.getElementById('sign_in_btn');
       var signoutButton = document.getElementById('sign_out_btn');
       var menuBtn = document.getElementById('menu');
@@ -38,9 +39,7 @@
           // Listen for sign-in state changes.
 
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          //handleAuthClick();
-
+          onLoaded.style.display = "block";
           // Handle the initial sign-in state.
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           authorizeButton.onclick = handleAuthClick;
