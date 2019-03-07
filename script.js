@@ -2,14 +2,14 @@
 randomGreeting();
 function randomGreeting() {
       var msg = document.getElementById('login_title');
-      var randomMSG = ["Ahoi!", "Hello,", "Yo!", "Hi"];
+      var randomMSG = ["Ahoi", "Hello", "Yo", "Hi", "Bonjour", "Hola", "Guten tag", "Ciao", "Ola", "Salaam", "Zdrasvuyte", "Konban wa", "Halo"];
       var min=0; 
       var max=randomMSG.length;  
       var random = Math.floor(
         Math.random() * (+max - +min)
       ) + +min;
 
-      msg.innerText = randomMSG[random];
+      msg.innerText = randomMSG[random] + ",";
 }
 
 
@@ -22,12 +22,13 @@ function randomGreeting() {
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+      var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
       var onLoaded = document.getElementById('onLoaded');
       var progress = document.getElementsByClassName('bouncybox')[0];
       var authorizeButton = document.getElementById('sign_in_btn');
       var signoutButton = document.getElementById('sign_out_btn');
+      var signedData = document.getElementById('signedData');
       var menuBtn = document.getElementById('menu');
       var header = document.getElementById('fixed_header_area');
       var isLoggedIn = document.getElementsByClassName("isLoggedIn")[0];
@@ -59,6 +60,7 @@ function randomGreeting() {
           progress.style.display = "none";
           // Handle the initial sign-in state.
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
         }, function(error) {
@@ -78,6 +80,7 @@ function randomGreeting() {
           isLoggedOut.style.display = 'none';
           signoutButton.style.display = 'block';
           menuBtn.style.display = "block";
+          signedData.style.display= "block";
           listMajors();
         } else {
           authorizeButton.style.display = 'block';
@@ -86,6 +89,7 @@ function randomGreeting() {
           isLoggedOut.style.display = 'block';
           signoutButton.style.display = 'none';
           menuBtn.style.display = "none";
+          signedData.style.display= "none";
         }
       }
 
@@ -125,15 +129,17 @@ function randomGreeting() {
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
       function listMajors() {
+        var pre = document.getElementById('results_section');
+        pre.innerHTML = "";
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
-          range: 'A1:D',
+          range: 'A1:E',
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
             for (i = 0; i < range.values.length; i++) {
               var row = range.values[i];
-              appendPre('<h1 class="company_name">'+row[0]+'</h1><p class="domain_name">'+row[1]+'</p><p class="contact_email">'+ row[2] +'</p><button class="current_state ' + (row[3].toLowerCase().replace(/ /g,"_")) + '">' + row[3] + '</button>', i);
+              appendPre('<input class="update_date" value="'+row[4]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="company_name" value="'+row[0]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="domain_name" value="'+row[1]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="contact_email" value="'+ row[2] +'" OnChange="updateRow(this.parentElement,' + i + ')"><br><input class="current_state ' + (row[3].toLowerCase().replace(/ /g,"_")) + '" value="' + row[3] + '" OnChange="updateRow(this.parentElement,' + i + ')">', i);
             }
           } else {
             appendPre('No results...');
@@ -153,9 +159,9 @@ function randomGreeting() {
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0];
+          td = tr[i].getElementsByTagName("td")[0]; //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
           if (td) {
-            txtValue = td.childNodes[0].innerText;
+            txtValue = td.childNodes[1].innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
               tr[i].style.display = "";
             } else {
@@ -170,3 +176,67 @@ function randomGreeting() {
         fx.style.display = (fx.style.display=="none") ? 'block':'none';
         randomGreeting();
       }
+
+      function toggleAddForm(obj) {
+        var f = document.getElementById(obj);
+        f.style.display = (f.style.display == "block") ? "none": "block";
+      }
+
+      function onAddSubmit(event) {
+        event.preventDefault();
+
+        var company = document.getElementById("company").value;
+        var domain = document.getElementById("domain").value;
+        var email = document.getElementById("email").value;
+        var status = document.getElementById("status").value;
+        var data = [company, domain, email, status, "=Now()"];
+        writeRow(data);
+
+      }
+
+  function writeRow(data) {
+      var values = [
+          data
+      ];
+      var body = {
+        values: values
+      };
+      gapi.client.sheets.spreadsheets.values.append({
+         spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
+         range: "A1:E",
+         valueInputOption: "USER_ENTERED",
+         resource: body
+      }).then((response) => {
+        var result = response.result;
+        location.reload();
+      });
+  }
+
+  function updateRow(data, i) {
+    data = [data.childNodes[1].value, data.childNodes[2].value, data.childNodes[3].value, data.childNodes[5].value, data.childNodes[0].value]
+    var ranges = ("A" + i+1 + ":E" + i+1);
+    var values = [
+        data
+    ];
+    var body = {
+      values: values
+    };
+    gapi.client.sheets.spreadsheets.values.update({
+       spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
+       range: ranges,
+       valueInputOption: "USER_ENTERED",
+       resource: body
+    }).then((response) => {
+      var result = response.result;
+      listMajors();
+    });
+  }
+
+
+
+
+
+
+
+
+

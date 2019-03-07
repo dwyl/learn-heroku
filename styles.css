@@ -1,8 +1,14 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: #fcfcf4;
+	width: 100vw;
 	font-family: 'Poppins', sans-serif;
+	overflow-x: hidden;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 .bouncybox {
@@ -37,23 +43,82 @@ body {
 	position: fixed;
 	z-index: 10;
 	top: 0;
+	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	overflow-y: auto;
+	min-height: 100%;
 	background: #f9f966;
 	box-sizing: border-box;
 	padding: 100px 25vw;
 }
 
+#current_sheet_display {
+	word-wrap: break-word;
+	box-sizing: border-box;
+	display: none;
+	position: relative;
+	font-size: 1.3em;
+	padding: 10px;
+	background: rgba(0,0,0,0.025);
+	border-radius: 4px;
+	color: #3d3d3d;
+}
+
 #header_area {
-	width: 100%;
+	width: 100vw;
 	background: #f9f966;
 	box-sizing: border-box;
 	padding: 100px 25vw;
+	margin: 0;
+}
+
+#add_new_form {
+	display: none;
+	margin: 25px 0 100px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.025);
+	border-radius: 4px;
+}
+
+#add_form_btn {
+	cursor: pointer;
+	border-bottom: 2px solid #3d3d3d;
+	line-height: 50px;
+}
+
+.add_form_input {
+	padding: 20px 0;
+	border: 0;
+	border-bottom: 2px solid #3d3d3d;
+	background: none;
+	font-size: 1.3em;
+	display: block;
+	margin: 10px 0;
+	min-width: 50%;
+	color: #3d3d3d;
+	outline: 0;
+}
+
+.add_form_input::placeholder {
+	color: #3d3d3d;
+}
+
+.add {
+	max-width: 125px;
+	min-width: 100px;
+	padding: 20px 0;
+	margin-top: 50px;
+	border: 2px solid #3d3d3d;
+	border-radius: 4px;
+	background: #fff;
+	font-size: 1.2em;
+	display: block;
 }
 
 #menu {
 	position: absolute;
+	cursor: pointer;
 	top: 15px;
 	left: 15px;
 	z-index: 0;
@@ -100,7 +165,7 @@ body {
 .different_states_btn {
 	outline: 0;
 	font-family: 'Poppins', sans-serif;
-	margin: 0 10px;
+	margin: 10px;
 	padding: 0;
 	border: 2px solid #66BB6A;
 	color: #3d3d3d !important;
@@ -112,19 +177,22 @@ body {
 }
 
 #results_section {
+	position: relative;
 	box-sizing: border-box;
 	background: #fff;
 	padding: 100px 25vw;
-	width: 100%;
+	width: 100vw;
+	margin: 0;
 }
 
 tr { display: inline; }
 
 .result_object {
+	position: relative;
 	display: inline-block;
 	margin: 5px;
 	background: #fff;
-	padding: 50px;
+	padding: 35px 25px;
 	width: calc(50% - 10px);
 	border-radius: 5px;
 	box-sizing: border-box;
@@ -134,30 +202,58 @@ tr { display: inline; }
 	box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.1);
 }
 
+.update_date {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	font-size: 0.6em;
+	color: #777;
+	margin: 0;
+	border: 0;
+	outline: 0;
+	padding: 0;
+	text-align: right;
+}
+
 .company_name {
+	border: 0;
+	outline: 0;
+	text-align: center;
 	margin: 0 0 10px 0;
 	padding: 0;
 	font-size: 1em;
+	width: 100%;
 }
 
 .domain_name {
+	border: 0;
+	outline: 0;
+	text-align: center;
 	margin: 0 0 0 0;
 	padding: 0;
 	font-size: 0.8em;
+	width: 100%;
 }
 
 .contact_email {
+	border: 0;
+	outline: 0;
+	text-align: center;
 	margin: 0 0 20px 0;
 	padding: 0;
 	font-size: 0.8em;
+	width: 100%;
 }
 
 .current_state {
+	border: 0;
+	outline: 0;
+	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	margin: 0;
 	padding: 0;
-	border: 2px solid #66BB6A;
-	color: #66BB6A;
+	border: 1px solid #66BB6A;
+	color: #3d3d3d;
 	border-radius: 5px;
 	width: 125px;
 	height: 40px;
@@ -165,18 +261,15 @@ tr { display: inline; }
 }
 
 .invite_recieved {
-	border: 2px solid #29B6F6;
-	color: #29B6F6;
+	border: 1px solid #29B6F6;
 }
 
 .preview_sent {
-	border: 2px solid #FF7043;
-	color: #FF7043;
+	border: 1px solid #FF7043;
 }
 
 .updates_pending {
-	border: 2px solid #EC407A;
-	color: #EC407A;
+	border: 1px solid #EC407A;
 }
 
 #login_title {
@@ -213,4 +306,48 @@ tr { display: inline; }
 	background: #fff;
 	font-size: 1.2em;
 	display: none;
+	margin-top: 100px;
 }
+
+/* Begin responsive */
+
+@media only screen and (max-width: 1200px) {
+  #results_section {
+  	width: 100vw;
+  	padding: 100px 5vw;
+  	margin: 0;
+  }
+  #header_area {
+  	padding: 100px 5vw;
+  }
+  #menu {
+  	left: 5vw;
+  	top: 25px;
+  }
+  #fixed_header_area {
+  	padding: 100px 5vw;
+  }
+  .add_form_input {
+  	width: 100%;
+  }
+  #current_sheet_display {
+  	width: 100%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #results_section {
+  	width: 100vw;
+  	margin: 0;
+  	padding: 50px 10px;
+
+  }
+  .result_object {
+  	box-sizing: border-box;
+  	width: 100%;
+  	margin: 10px 0;
+  }
+}
+
+/* Begin Mobile Design */
+

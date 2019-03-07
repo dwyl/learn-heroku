@@ -17,9 +17,24 @@
 		<img src="close.png" id="menu" Onclick="toggleMenu()" style="display: none;">
 		<h1 id="login_title">Hello,</h1>
 		<p class="login_subtitle isLoggedOut">Please login to your Google account to continue.</p>
-		<p class="login_subtitle isLoggedIn">Please logout to protect sensitive data.</p>
+		<p class="login_subtitle isLoggedIn">Remember to logout when done in order to protect sensitive data.</p>
 		<button id="sign_in_btn">Sign In</button>
-		<button id="sign_out_btn">Sign Out</button>
+
+		<div id="signedData">	
+			<h2 id="add_form_btn" Onclick="toggleAddForm('current_sheet_display')"> Show sheet ID <span style="float: right">+</span></h2>
+			<p id="current_sheet_display"><a href="https://docs.google.com/spreadsheets/d/15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E" target="_BLANK">15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E</a></p>
+			<h2 id="add_form_btn" Onclick="toggleAddForm('add_new_form')">Add store <span style="float: right">+</span></h2>
+			<form id="add_new_form" OnSubmit="onAddSubmit(event)">
+				<input id="company"  class="add_form_input" type="text" placeholder="Store name" required>
+				<input id="email" class="add_form_input" type="text" type="text" placeholder="Contact email" required>
+				<input id="domain" class="add_form_input" type="text" type="text" placeholder="Domain" required>
+				<input id="status" class="add_form_input" type="text" type="text" placeholder="Status of install" required>
+				<input class="add_form_input add" type="submit" type="text" value="Add">
+ 			</form>
+
+			<button id="sign_out_btn">Sign Out</button>
+		</div>
+
 		</div>
 		<div class="bouncybox">
       			<div class="bouncy"></div>
