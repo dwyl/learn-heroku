@@ -217,7 +217,7 @@ function randomGreeting() {
   function updateRow(data, i) {
     console.log(i);
     data = [data.childNodes[1].value, data.childNodes[2].value, data.childNodes[3].value, data.childNodes[5].value, data.childNodes[0].value]
-    var ranges = (("A" + parseInt(i)+1) + (":E" + parseInt(i)+1));
+    var ranges = (("A" + (parseInt(i)+1)) + (":E" + (parseInt(i)+1)));
     console.log(ranges);
     var values = [
         data
