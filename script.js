@@ -164,6 +164,7 @@ function randomGreeting() {
           td = tr[i].getElementsByTagName("td")[0]; //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
           if (td) {
             txtValue = td.childNodes[1].innerText;
+            console.log(txtValue);
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
               tr[i].style.display = "";
             } else {
