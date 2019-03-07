@@ -136,7 +136,7 @@ function randomGreeting() {
           range: 'A1:E',
         }).then(function(response) {
           var range = response.result;
-          if (range.values.length > 0) {
+          if (range && range.values.length > 0) {
             for (i = 0; i < range.values.length; i++) {
               var row = range.values[i];
               if(row.length) {
