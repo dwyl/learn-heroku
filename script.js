@@ -84,7 +84,7 @@ function randomGreeting() {
           listMajors();
           window.setInterval(function(){
             listMajors();
-          }, 10000);
+          }, 60000);
         } else {
           authorizeButton.style.display = 'block';
           header.style.display = 'block';
