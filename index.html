@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<div id="disable_updates">Live updates have been postponed and will resume once you have stopped editing. Or click <b>here</b> to stop editing.</div>
+	<div id="disable_updates">Live updates have been postponed and will resume once you have stopped editing.<br>Alternatively click <b>here</b> to stop editing.</div>
 	<div id="fixed_header_area">
 		<div id="onLoaded" style="display: none">
 		<img src="close.png" id="menu" Onclick="toggleMenu()" style="display: none;">
@@ -47,7 +47,7 @@
 		<input type="text" id="search" class="header_area_input" placeholder="Find something" onkeyup="searchFunction()" />
 	</div>
 	<div id="different_states">
-		<p id="state_title">Different states:</p>
+		<p id="state_title">Pipeline</p>
 		<button class="different_states_btn all_states" OnClick="sortTable('status', '')">All</button>
 		<button class="different_states_btn invite_received" OnClick="sortTable('status', 'Invite Received')">Invite Received</button>
 		<button class="different_states_btn preview_sent" OnClick="sortTable('status', 'Preview Sent')">Preview Sent</button>

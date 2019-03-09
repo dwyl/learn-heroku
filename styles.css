@@ -50,6 +50,16 @@ a {
 	box-sizing: border-box;
 	width: 50vw;
 	background: #ff3019;
+	animation: slidedown 0.4s forwards;
+}
+
+@keyframes slidedown {
+	0% {
+		top: -500px;
+	}
+	100% {
+		top: 0;
+	}
 }
 
 #fixed_header_area {
@@ -187,6 +197,7 @@ a {
 	padding: 0;
 	width: 150px;
 	height: 50px;
+	cursor: pointer;
 }
 
 #results_section {

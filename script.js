@@ -73,6 +73,8 @@ function randomGreeting() {
        *  appropriately. After a sign-in, the API is called.
        */
 
+      let canUpdate = true;
+
       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
