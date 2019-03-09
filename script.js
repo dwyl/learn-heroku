@@ -81,7 +81,9 @@ function randomGreeting() {
           signoutButton.style.display = 'block';
           menuBtn.style.display = "block";
           signedData.style.display= "block";
-          listMajors();
+          window.setInterval(function(){
+            listMajors();
+          }, 60000);
         } else {
           authorizeButton.style.display = 'block';
           header.style.display = 'block';
