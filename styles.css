@@ -39,6 +39,17 @@ a {
   }
 }
 
+#disable_updates {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 25vw;
+	padding: 15px 50px;
+	box-sizing: border-box;
+	width: 50vw;
+	background: #ff3019;
+}
+
 #fixed_header_area {
 	position: fixed;
 	z-index: 10;

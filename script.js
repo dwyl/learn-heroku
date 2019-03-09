@@ -72,6 +72,7 @@ function randomGreeting() {
        *  Called when the signed in status changes, to update the UI
        *  appropriately. After a sign-in, the API is called.
        */
+
       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
@@ -83,7 +84,9 @@ function randomGreeting() {
           signedData.style.display= "block";
           listMajors();
           window.setInterval(function(){
-            listMajors();
+            if(canUpdate) {
+              listMajors();
+            }
           }, 60000);
         } else {
           authorizeButton.style.display = 'block';
@@ -126,7 +129,14 @@ function randomGreeting() {
         var cell = row.insertCell(-1);
         cell.className = "result_object";
         cell.innerHTML = (message);
-        companyList.push(cell);
+        cell.addEventListener('focusin', (event) => {
+          canUpdate = false;
+          document.getElementById("disable_updates").style.display = "block";    
+        });
+        cell.addEventListener('focusout', (event) => {
+          canUpdate = true;
+          document.getElementById("disable_updates").style.display = "none"; 
+        });
       }
 
       /**
