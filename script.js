@@ -118,22 +118,28 @@ function randomGreeting() {
        */
 
       var lastRow;
+      var companyList = [];
+                      
       function appendPre(message, i) {
         var row;
         var pre = document.getElementById('results_section');
         row = pre.insertRow(-1);
         var cell = row.insertCell(-1);
         cell.className = "result_object";
-        cell.innerHTML = (message);
+        if(cell.innerHTML != (message)) {
+          cell.innerHTML = (message);
+          companyList.push(cell);
+        }
       }
 
       /**
        * Print the names and majors of students in a sample spreadsheet:
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
+
       function listMajors() {
         var pre = document.getElementById('results_section');
-        pre.innerHTML = "";
+        //pre.innerHTML = "";
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
           range: 'A1:E',
