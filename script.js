@@ -84,7 +84,7 @@ function randomGreeting() {
           listMajors();
           window.setInterval(function(){
             listMajors();
-          }, 60000);
+          }, 10000);
         } else {
           authorizeButton.style.display = 'block';
           header.style.display = 'block';
@@ -126,10 +126,13 @@ function randomGreeting() {
         row = pre.insertRow(-1);
         var cell = row.insertCell(-1);
         cell.className = "result_object";
-        if(cell.innerHTML != (message)) {
-          cell.innerHTML = (message);
-          companyList.push(cell);
+        for(c in companyList) {
+          if(c.innerHTML == (message)) {
+            return
+          }
         }
+        cell.innerHTML = (message);
+        companyList.push(cell);
       }
 
       /**
