@@ -118,7 +118,6 @@ function randomGreeting() {
        */
 
       var lastRow;
-      var companyList = [];
                       
       function appendPre(message, i) {
         var row;
@@ -126,11 +125,6 @@ function randomGreeting() {
         row = pre.insertRow(-1);
         var cell = row.insertCell(-1);
         cell.className = "result_object";
-        for(c in companyList) {
-          if(c.innerHTML == (message)) {
-            return
-          }
-        }
         cell.innerHTML = (message);
         companyList.push(cell);
       }
@@ -139,7 +133,7 @@ function randomGreeting() {
        * Print the names and majors of students in a sample spreadsheet:
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
-
+      var companyList = [];
       function listMajors() {
         var pre = document.getElementById('results_section');
         //pre.innerHTML = "";
@@ -151,9 +145,10 @@ function randomGreeting() {
           if (range.values && range.values.length > 0) {
             for (i = 0; i < range.values.length; i++) {
               var row = range.values[i];
-              if(row.length) {
+              if(row.length && !companyList.includes(row[0]) {
                 appendPre('<input class="update_date" value="'+row[4]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="company_name" value="'+row[0]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="domain_name" value="'+row[1]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="contact_email" value="'+ row[2] +'" OnChange="updateRow(this.parentElement,' + i + ')"><br><input class="current_state ' + ((row[3].length) ? row[3].toLowerCase().replace(/ /g,"_"):"Undefined") + '" value="' + row[3] + '" OnChange="updateRow(this.parentElement,' + i + ')">', i);
-              }
+                companyList.push(row[0]);  
+            }
             }
           } else {
             appendPre('No results...');
