@@ -273,6 +273,10 @@ tr { display: inline; }
 	background: none;
 }
 
+.all_states {
+	border: 1px solid #8342f4;
+}
+
 .invite_received {
 	border: 1px solid #29B6F6;
 }

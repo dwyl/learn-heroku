@@ -251,6 +251,30 @@ function randomGreeting() {
     });
   }
 
+  //https://www.w3schools.com/howto/howto_js_sort_table.asp
+  function sortTable(sortIndex, filter) {
+    //Handle input
+    var indexFilter = ["date", "name", "domain", "email", "skip", "status"];
+    var newIndex = indexFilter.indexOf(sortIndex); //Tells us which item to sort
+    // Declare variables 
+    var table, tr, td, i, txtValue;
+    filter = filter.toUpperCase();
+    table = document.getElementById("results_section");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0]; //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
+      if (td) {
+        txtValue = td.childNodes[newIndex].value;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+  }
 
 
 

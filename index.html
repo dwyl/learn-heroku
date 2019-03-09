@@ -48,10 +48,11 @@
 	</div>
 	<div id="different_states">
 		<p id="state_title">Different states:</p>
-		<button class="different_states_btn invite_received">Invite Recieved</button>
-		<button class="different_states_btn preview_sent">Preview Sent</button>
-		<button class="different_states_btn updates_pending">Updates Pending</button>
-		<button class="different_states_btn published">Published</button>
+		<button class="different_states_btn all_states" OnClick="sortTable('status', '')">All</button>
+		<button class="different_states_btn invite_received" OnClick="sortTable('status', 'Invite Received')">Invite Received</button>
+		<button class="different_states_btn preview_sent" OnClick="sortTable('status', 'Preview Sent')">Preview Sent</button>
+		<button class="different_states_btn updates_pending" OnClick="sortTable('status', 'Updates Pending')">Updates Pending</button>
+		<button class="different_states_btn published" OnClick="sortTable('status', 'Published')">Published</button>
 	</div>
 	<table id="results_section">
 	</table>
