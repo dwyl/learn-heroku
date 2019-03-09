@@ -145,9 +145,9 @@ function randomGreeting() {
           if (range.values && range.values.length > 0) {
             for (i = 0; i < range.values.length; i++) {
               var row = range.values[i];
-              if(row.length && !companyList.includes( row )) {
+              if(row.length && !companyList.includes( row[0] )) {
                 appendPre('<input class="update_date" value="'+row[4]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="company_name" value="'+row[0]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="domain_name" value="'+row[1]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="contact_email" value="'+ row[2] +'" OnChange="updateRow(this.parentElement,' + i + ')"><br><input class="current_state ' + ((row[3].length) ? row[3].toLowerCase().replace(/ /g,"_"):"Undefined") + '" value="' + row[3] + '" OnChange="updateRow(this.parentElement,' + i + ')">', i);
-                companyList.push(row);  
+                companyList.push( row[0] );  
             }
             }
           } else {
