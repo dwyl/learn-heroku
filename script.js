@@ -139,7 +139,7 @@ function randomGreeting() {
         //pre.innerHTML = "";
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
-          range: 'A1:E',
+          range: 'Sheet1',
         }).then(function(response) {
           var range = response.result;
           if (range.values && range.values.length > 0) {
