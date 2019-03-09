@@ -40,6 +40,8 @@ a {
 }
 
 #disable_updates {
+	z-index: 11;
+	color: #fff;
 	display: none;
 	position: fixed;
 	top: 0;
@@ -357,6 +359,10 @@ tr { display: inline; }
   	box-sizing: border-box;
   	width: 100%;
   	margin: 10px 0;
+  }
+  #disable_updates {
+  	width: 100vw;
+  	left: 0;
   }
 }
 
