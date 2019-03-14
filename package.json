@@ -1,6 +1,6 @@
 {
   "name": "learn-heroku",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "http-server": "^0.9.0",
     "live-server": "^1.2.0"
