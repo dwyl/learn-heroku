@@ -295,7 +295,7 @@ Scroll down to the "Manual deploy" section:
 
 ![heroku-manual-deploy](https://user-images.githubusercontent.com/194400/36447781-5229282a-167d-11e8-956b-aed5acc9c15f.png)
 
-Click on the "**Deploy Brach**" button.
+Click on the "**Deploy Branch**" button.
 
 This will _start_ the build process.
 Heroku will show you the "build log":
