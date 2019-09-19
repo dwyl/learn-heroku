@@ -64,6 +64,7 @@ function randomGreeting() {
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
         }, function(error) {
+          console.log(error)
           appendPre(JSON.stringify(error, null, 2));
         });
       }
