@@ -13,55 +13,68 @@
 
 <body>
 	<div id="disable_updates">Live updates have been postponed and will resume once you have stopped editing.<br>Alternatively click <b>here</b> to stop editing.</div>
-	<div id="fixed_header_area">
-		<div id="onLoaded" style="display: none">
-		<img src="IMG/close.png" id="menu" Onclick="toggleMenu()" style="display: none;">
+	<div id="onLoaded" style="display: block"></div>
+	<div id="login_window">
 		<h1 id="login_title">Hello,</h1>
 		<p class="login_subtitle isLoggedOut">Please login to your Google account to continue.</p>
-		<p class="login_subtitle isLoggedIn">Remember to logout when done in order to protect sensitive data.</p>
 		<button id="sign_in_btn">Sign In</button>
-
-		<div id="signedData">	
-			<h2 id="add_form_btn" Onclick="toggleAddForm('current_sheet_display')"> Show sheet ID <span style="float: right">+</span></h2>
-			<p id="current_sheet_display"><a href="https://docs.google.com/spreadsheets/d/15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E" target="_BLANK">15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E</a></p>
-			<h2 id="add_form_btn" Onclick="toggleAddForm('add_new_form')">Add store <span style="float: right">+</span></h2>
-			<form id="add_new_form" OnSubmit="onAddSubmit(event)">
-				<input id="company"  class="add_form_input" type="text" placeholder="Store name" required>
-				<input id="email" class="add_form_input" type="text" type="text" placeholder="Contact email" required>
-				<input id="domain" class="add_form_input" type="text" type="text" placeholder="Domain" required>
-				<input id="status" class="add_form_input" type="text" type="text" placeholder="Status of install" required>
-				<input class="add_form_input add" type="submit" type="text" value="Add">
- 			</form>
-
-			<button id="sign_out_btn">Sign Out</button>
-		</div>
-
-		</div>
-		<div class="bouncybox">
-      			<div class="bouncy"></div>
-    		</div>
 	</div>
-
-	<div id="header_area">
-		<img src="IMG/menu.png" id="menu" Onclick="toggleMenu()">
-		<input type="text" id="search" class="header_area_input" placeholder="Find something" onkeyup="searchFunction()" />
-	</div>
-	<div id="different_states">
-		<p id="state_title">Pipeline</p>
-		<button class="different_states_btn all_states" OnClick="sortTable('status', '')">All</button>
-		<button class="different_states_btn invite_received" OnClick="sortTable('status', 'Invite Received')">Invite Received</button>
-		<button class="different_states_btn preview_sent" OnClick="sortTable('status', 'Preview Sent')">Preview Sent</button>
-		<button class="different_states_btn updates_pending" OnClick="sortTable('status', 'Updates Pending')">Updates Pending</button>
-		<button class="different_states_btn published" OnClick="sortTable('status', 'Published')">Published</button>
-	</div>
-	<table id="results_section">
-	</table>
 	
-	<script src="JS/script.min.js"></script>
+	<main id="user_content">
+		<div id="fixed_header_area">
+			<img src="IMG/close.png" id="menu" Onclick="toggleMenu()">
+			<h1 id="login_title">Hello,</h1>
+			<p class="login_subtitle isLoggedIn">Remember to logout when done in order to protect sensitive data.</p>
+
+			<div id="signedData">	
+				<h2 id="add_form_btn" Onclick="toggleAddForm('update_sheet')"> Show sheet ID <span style="float: right">+</span></h2>
+				<form id="update_sheet" OnSubmit="onEditSubmit(event)">
+					<input type="text" id="current_sheet_display" value="15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E" required /> <!-- <a href="https://docs.google.com/spreadsheets/d/15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E" target="_BLANK" -->
+					<input class="add_form_input add" type="submit" type="text" value="Save">
+				</form>
+				<h2 id="add_form_btn" Onclick="toggleAddForm('add_new_form')">Add store <span style="float: right">+</span></h2>
+				<form id="add_new_form" OnSubmit="onAddSubmit(event)">
+					<input id="company"  class="add_form_input" type="text" placeholder="Store name" required>
+					<input id="email" class="add_form_input" type="text" type="text" placeholder="Contact email" required>
+					<input id="domain" class="add_form_input" type="text" type="text" placeholder="Domain" required>
+					<input id="status" class="add_form_input" type="text" type="text" placeholder="Status of install" required>
+					<input class="add_form_input add" type="submit" type="text" value="Add">
+				</form>
+
+				<button id="sign_out_btn">Sign Out</button>
+			</div>
+
+			</div>
+			<div class="bouncybox">
+					<div class="bouncy"></div>
+				</div>
+		</div>
+
+		<div id="header_area">
+			<img src="IMG/menu.png" id="menu" Onclick="toggleMenu()">
+			<input type="text" id="search" class="header_area_input" placeholder="Find something" onkeyup="searchFunction()" />
+		</div>
+		<div id="different_states">
+			<p id="state_title">Pipeline</p>
+			<button class="different_states_btn all_states" OnClick="sortTable('status', '')">All</button>
+			<button class="different_states_btn invite_received" OnClick="sortTable('status', 'Invite Received')">Invite Received</button>
+			<button class="different_states_btn preview_sent" OnClick="sortTable('status', 'Preview Sent')">Preview Sent</button>
+			<button class="different_states_btn updates_pending" OnClick="sortTable('status', 'Updates Pending')">Updates Pending</button>
+			<button class="different_states_btn published" OnClick="sortTable('status', 'Published')">Published</button>
+		</div>
+		<table id="results_section">
+		</table>
+
+	</main>
+
+	<script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+
 	<script async defer src="https://apis.google.com/js/api.js"
 	  onload="this.onload=function(){};handleClientLoad()"
 	  onreadystatechange="if (this.readyState === 'complete') this.onload()">
-	</script>
-	
+	</script>	
+	<script src="JS/script.js"></script>
 </body>
 </html>

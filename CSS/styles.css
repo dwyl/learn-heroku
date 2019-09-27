@@ -2,6 +2,7 @@ html {
 	touch-action: manipulation;
 }
 body {
+	background: #fafafa;
 	margin: 0;
 	padding: 0;
 	width: 100vw;
@@ -12,6 +13,25 @@ body {
 a {
 	text-decoration: none;
 	color: inherit;
+}
+
+#login_window {
+	display: block;
+	position: fixed;
+	z-index: 10;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	overflow-y: auto;
+	min-height: 100%;
+	background: #f9f966;
+	box-sizing: border-box;
+	padding: 100px 25vw;
+}
+
+#user_content {
+	display: none;
 }
 
 .bouncybox {
@@ -52,8 +72,10 @@ a {
 	padding: 15px 50px;
 	box-sizing: border-box;
 	width: 50vw;
-	background: #ff3019;
+	background: #ff4d39;
 	animation: slidedown 0.4s forwards;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 @keyframes slidedown {
@@ -66,6 +88,7 @@ a {
 }
 
 #fixed_header_area {
+	display: none;
 	position: fixed;
 	z-index: 10;
 	top: 0;
@@ -82,13 +105,15 @@ a {
 #current_sheet_display {
 	word-wrap: break-word;
 	box-sizing: border-box;
-	display: none;
 	position: relative;
 	font-size: 1.3em;
 	padding: 10px;
 	background: rgba(0,0,0,0.025);
 	border-radius: 4px;
 	color: #3d3d3d;
+	border: 0;
+	width: 100%;
+	outline: 0;
 }
 
 #header_area {
@@ -97,6 +122,14 @@ a {
 	box-sizing: border-box;
 	padding: 100px 25vw;
 	margin: 0;
+}
+
+#update_sheet {
+	display: none;
+	margin: 25px 0 100px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.025);
+	border-radius: 4px;
 }
 
 #add_new_form {
@@ -206,7 +239,6 @@ a {
 #results_section {
 	position: relative;
 	box-sizing: border-box;
-	background: #fff;
 	padding: 100px 25vw;
 	width: 100vw;
 	margin: 0;
@@ -219,14 +251,12 @@ tr { display: inline; }
 	display: inline-block;
 	margin: 5px;
 	background: #fff;
+	border: 1px solid #f3f3f3;
 	padding: 35px 25px;
 	width: calc(50% - 10px);
 	border-radius: 5px;
 	box-sizing: border-box;
 	text-align: center;
-	-webkit-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.1);
-	-moz-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.1);
-	box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.1);
 }
 
 .update_date {
@@ -336,11 +366,22 @@ tr { display: inline; }
 	border-radius: 4px;
 	background: #fff;
 	font-size: 1.2em;
-	display: none;
 	margin-top: 100px;
 }
 
 /* Begin responsive */
+@media only screen and (min-width: 1201px) {
+	#results_section {
+		width: 100vw;
+		padding: 35px 10vw;
+		margin: 0;
+	}
+	.result_object {
+		box-sizing: border-box;
+		width: calc(25% - 10px);
+		margin: 5px;
+	}
+}
 
 @media only screen and (max-width: 1200px) {
   #results_section {

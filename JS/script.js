@@ -1,283 +1,304 @@
-//Random Greeting
-randomGreeting();
-function randomGreeting() {
-      var msg = document.getElementById('login_title');
-      var randomMSG = ["Ahoi", "Hello", "Yo", "Hi", "Bonjour", "Hola", "Guten tag", "Ciao", "Ola", "Salaam", "Zdrasvuyte", "Konban wa", "Halo"];
-      var min=0; 
-      var max=randomMSG.length;  
-      var random = Math.floor(
-        Math.random() * (+max - +min)
-      ) + +min;
+const API_KEY = 'AIzaSyDMbhCmhzrIsKXoGrxbqOTRzdoYiwxllag'
+const CLIENT_ID = '4137827372-07nd717u8ecpq74eetr5l2sidd3649nv.apps.googleusercontent.com'
+const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"]
+const SCOPES = "https://www.googleapis.com/auth/spreadsheets"
 
-      msg.innerText = randomMSG[random] + ",";
+const firebaseConfig = {
+  apiKey: "AIzaSyDMbhCmhzrIsKXoGrxbqOTRzdoYiwxllag",
+  authDomain: "tape-deck-static.firebaseapp.com",
+  databaseURL: "https://tape-deck-static.firebaseio.com",
+  projectId: "tape-deck-static",
+  storageBucket: "",
+  messagingSenderId: "4137827372",
+  appId: "1:4137827372:web:d10f937295dd3a4a506589"
 }
 
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
 
-// Client ID and API key from the Developer Console
-      var CLIENT_ID = '929069745301-7c7p3kv04nnqlck4iommqbd94op1irkq.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyCYjjoLglFHnxywR6QxPs7IDJQFfKFp0Xs';
+let googleUser, isSignedIn
 
-      // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+const provider = new firebase.auth.GoogleAuthProvider()
+provider.addScope(SCOPES)
 
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+const handleClientLoad = () => {
+  gapi.load('client:auth2', initClient)
+}
 
-      var onLoaded = document.getElementById('onLoaded');
-      var progress = document.getElementsByClassName('bouncybox')[0];
-      var authorizeButton = document.getElementById('sign_in_btn');
-      var signoutButton = document.getElementById('sign_out_btn');
-      var signedData = document.getElementById('signedData');
-      var menuBtn = document.getElementById('menu');
-      var header = document.getElementById('fixed_header_area');
-      var isLoggedIn = document.getElementsByClassName("isLoggedIn")[0];
-      var isLoggedOut = document.getElementsByClassName("isLoggedOut")[0];
-      
+const initClient = () => {
+  //listMajors()
+  gapi.client.init({
+    apiKey: API_KEY,
+    clientId: CLIENT_ID,
+    discoveryDocs: DISCOVERY_DOCS,
+    scope: SCOPES,
+  }).then(() => {
+    googleUser = gapi.auth2.getAuthInstance().currentUser.get()
+    isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get() 
+    if (isSignedIn) {
+      // get the credentials from the google auth response
+      const idToken = googleUser.getAuthResponse().id_token
+      const creds = firebase.auth.GoogleAuthProvider.credential(idToken)
+      // auth in the user 
+      firebase.auth().signInWithCredential(creds).then((user) => {
+         // you can use (user) or googleProfile to setup the user
+         const googleProfile = googleUser.getBasicProfile()
+         if (user) {
+            // do something with this user
+            listMajors()
+         }
+      })
+   }
+  })
+}
 
-      /**
-       *  On load, called to load the auth2 library and API client library.
-       */
-      function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
-      }
+//Declare elements of interest
+const loading = document.getElementsByClassName('bouncybox')[0]
+const loginWindow = document.getElementById('login_window')
+const userContent = document.getElementById('user_content')
 
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-      function initClient() {
-        gapi.client.init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
-          discoveryDocs: DISCOVERY_DOCS,
-          scope: SCOPES
-        }).then(function () {
-          // Listen for sign-in state changes.
+document.getElementById('sign_in_btn').addEventListener('click', () => {
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      const token = result.credential.accessToken
+      const user = result.user
+    }).catch(function(error) {
+      const errorCode = error.code
+      const errorMessage = error.message
+      const email = error.email
+      const credential = error.credential
+    })
+})
 
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-          onLoaded.style.display = "block";
-          progress.style.display = "none";
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+document.getElementById('sign_out_btn').addEventListener('click', () => {
+  console.log("Log out")
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  })
+})
 
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
-        }, function(error) {
-          console.log(error)
-          appendPre(JSON.stringify(error, null, 2));
-        });
-      }
-
-      /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-
-      let canUpdate = true;
-
-      function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-          authorizeButton.style.display = 'none';
-          header.style.display = 'none';
-          isLoggedIn.style.display = 'block';
-          isLoggedOut.style.display = 'none';
-          signoutButton.style.display = 'block';
-          menuBtn.style.display = "block";
-          signedData.style.display= "block";
-          listMajors();
-          window.setInterval(function(){
-            if(canUpdate) {
-              listMajors();
-            }
-          }, 60000);
-        } else {
-          authorizeButton.style.display = 'block';
-          header.style.display = 'block';
-          isLoggedIn.style.display = 'none';
-          isLoggedOut.style.display = 'block';
-          signoutButton.style.display = 'none';
-          menuBtn.style.display = "none";
-          signedData.style.display= "none";
-        }
-      }
-
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-      }
-
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-      }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-
-      var lastRow;
-                      
-      function appendPre(message, i) {
-        var row;
-        var pre = document.getElementById('results_section');
-        row = pre.insertRow(-1);
-        var cell = row.insertCell(-1);
-        cell.className = "result_object";
-        cell.innerHTML = (message);
-        cell.addEventListener('focusin', (event) => {
-          canUpdate = false;
-          document.getElementById("disable_updates").style.display = "block";    
-        });
-        cell.addEventListener('focusout', (event) => {
-          canUpdate = true;
-          document.getElementById("disable_updates").style.display = "none"; 
-        });
-      }
-
-      /**
-       * Print the names and majors of students in a sample spreadsheet:
-       * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-       */
-      var companyList = [];
-      function listMajors() {
-        var pre = document.getElementById('results_section');
-        //pre.innerHTML = "";
-        gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
-          range: 'Sheet1',
-        }).then(function(response) {
-          var range = response.result;
-          if (range.values && range.values.length > 0) {
-            for (i = 0; i < range.values.length; i++) {
-              var row = range.values[i];
-              if(row.length && !companyList.includes( row[0] )) {
-                appendPre('<input class="update_date" value="'+row[4]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="company_name" value="'+row[0]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="domain_name" value="'+row[1]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="contact_email" value="'+ row[2] +'" OnChange="updateRow(this.parentElement,' + i + ')"><br><input class="current_state ' + ((row[3].length) ? row[3].toLowerCase().replace(/ /g,"_"):"Undefined") + '" value="' + row[3] + '" OnChange="updateRow(this.parentElement,' + i + ')">', i);
-                companyList.push( row[0] );  
-            }
-            }
-          } else {
-            appendPre('No results...');
-          }
-        }, function(response) {
-          appendPre('Error: ' + response.result.error.message);
-        });
-      }
-
-      function searchFunction() {
-        // Declare variables 
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("results_section");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0]; //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
-          if (td) {
-            txtValue = td.childNodes[1].value;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          } 
-        }
-      }
-
-      function toggleMenu() {
-        var fx = document.getElementById('fixed_header_area');
-        fx.style.display = (fx.style.display=="none") ? 'block':'none';
-        randomGreeting();
-      }
-
-      function toggleAddForm(obj) {
-        var f = document.getElementById(obj);
-        f.style.display = (f.style.display == "block") ? "none": "block";
-      }
-
-      function onAddSubmit(event) {
-        event.preventDefault();
-
-        var company = document.getElementById("company").value;
-        var domain = document.getElementById("domain").value;
-        var email = document.getElementById("email").value;
-        var status = document.getElementById("status").value;
-        var data = [company, domain, email, status, "=Now()"];
-        writeRow(data);
-
-      }
-
-  function writeRow(data) {
-      var values = [
-          data
-      ];
-      var body = {
-        values: values
-      };
-      gapi.client.sheets.spreadsheets.values.append({
-         spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
-         range: "A1:E",
-         valueInputOption: "USER_ENTERED",
-         resource: body
-      }).then((response) => {
-        var result = response.result;
-        location.reload();
-      });
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    verifyUser(user)
+    const displayName = user.displayName
+    const email = user.email
+    const emailVerified = user.emailVerified
+    const photoURL = user.photoURL
+    const isAnonymous = user.isAnonymous
+    const uid = user.uid
+    const providerData = user.providerData
+    loading.style.display = 'none'
+    loginWindow.style.display = 'none'
+    userContent.style.display = 'block'
+  } else {
+    loading.style.display = 'none'
+    userContent.style.display = 'none'
+    loginWindow.style.display = 'block'
   }
+})
 
-  function updateRow(data, i) {
-    data = [data.childNodes[1].value, data.childNodes[2].value, data.childNodes[3].value, data.childNodes[5].value, data.childNodes[0].value]
-    var ranges = (("A" + (parseInt(i)+1)) + (":E" + (parseInt(i)+1)));
-    var values = [
-        data
-    ];
-    var body = {
-      values: values
-    };
-    gapi.client.sheets.spreadsheets.values.update({
-       spreadsheetId: '15As92qSD9_6DEZC2nSdPtCqOSLFR4_KNiXWHC0JLY_E',
-       range: ranges,
-       valueInputOption: "USER_ENTERED",
-       resource: body
-    }).then((response) => {
-      var result = response.result;
-      listMajors();
-    });
-  }
+const verifyUser = user => {
+  db.collection("users").doc(user.uid).set({
+    email: user.email
+  })
+  .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id)
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error)
+  })
+}
 
-  //https://www.w3schools.com/howto/howto_js_sort_table.asp
-  function sortTable(sortIndex, filter) {
-    //Handle input
-    var indexFilter = ["date", "name", "domain", "email", "skip", "status"];
-    var newIndex = indexFilter.indexOf(sortIndex); //Tells us which item to sort
-    // Declare variables 
-    var table, tr, td, i, txtValue;
-    filter = filter.toUpperCase();
-    table = document.getElementById("results_section");
-    tr = table.getElementsByTagName("tr");
+//Random Greeting
+const randomGreeting = () => {
+  const msg = document.getElementById('login_title')
+  const randomMSG = [
+    "Ahoi", 
+    "Hello", 
+    "Yo", 
+    "Hi", 
+    "Bonjour", 
+    "Hola", 
+    "Guten tag", 
+    "Ciao", 
+    "Ola", 
+    "Salaam", 
+    "Zdrasvuyte", 
+    "Konban wa", 
+    "Halo"
+  ]
+  const min = 0
+  const max = randomMSG.length
+  const random = Math.floor(
+    Math.random() * (+max - +min)
+  ) + +min
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0]; //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
-      if (td) {
-        txtValue = td.childNodes[newIndex].value;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+  msg.innerText = randomMSG[random] + ","
+}
+
+const getCookie = name => {
+  const value = "; " + document.cookie
+  const parts = value.split("; " + name + "=")
+  if (parts.length == 2) return parts.pop().split(";").shift()
+}
+
+const onLoaded = document.getElementById('onLoaded')
+const authorizeButton = document.getElementById('sign_in_btn')
+const signedData = document.getElementById('signedData')
+const menuBtn = document.getElementById('menu')
+const header = document.getElementById('fixed_header_area')
+const isLoggedIn = document.getElementsByClassName("isLoggedIn")[0]
+const isLoggedOut = document.getElementsByClassName("isLoggedOut")[0]
+         
+const appendPre = (message, i) => {
+  const row
+  const pre = document.getElementById('results_section')
+  row = pre.insertRow(-1)
+  const cell = row.insertCell(-1)
+  cell.className = "result_object"
+  cell.innerHTML = (message)
+  cell.addEventListener('focusin', (event) => {
+    canUpdate = false
+    document.getElementById("disable_updates").style.display = "block"  
+  })
+  cell.addEventListener('focusout', (event) => {
+    canUpdate = true
+    document.getElementById("disable_updates").style.display = "none"
+  })
+}
+
+const listMajors = () => {
+  let companyList = []
+  const pre = document.getElementById('results_section')
+  gapi.client.sheets.spreadsheets.values.get({
+    spreadsheetId: '1Ak_zvY5HqoeODZJO7goJBVDxU4uFkHeS6NKsYmuztk8',
+    range: 'sheet1',
+  }).then(function(response) {
+    const range = response.result
+    if (range.values && range.values.length > 0) {
+      for (i = 1; i < range.values.length; i++) {
+        const row = range.values[i]
+        if(row.length && !companyList.includes( row[0] )) {
+          appendPre('<input class="update_date" value="'+row[4]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="company_name" value="'+row[0]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="domain_name" value="'+row[1]+'" OnChange="updateRow(this.parentElement,' + i + ')"><input class="contact_email" value="'+ row[2] +'" OnChange="updateRow(this.parentElement,' + i + ')"><br><input class="current_state ' + ((row[3].length) ? row[3].toLowerCase().replace(/ /g,"_"):"Undefined") + '" value="' + row[3] + '" OnChange="updateRow(this.parentElement,' + i + ')">', i)
+          companyList.push( row[0] )
         }
-      } 
+      }
+    } else {
+      appendPre('No results...')
     }
+    }, function(response) {
+      gapi.auth2.getAuthInstance().signIn()
+      appendPre('Error: ' + response.result.error.message)
+    })
+}
+
+const searchFunction = () => {
+  let input, filter, table, tr, td, i, txtValue
+  input = document.getElementById("search")
+  filter = input.value.toUpperCase()
+  table = document.getElementById("results_section")
+  tr = table.getElementsByTagName("tr")
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0] //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
+    if (td) {
+      txtValue = td.childNodes[1].value
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = ""
+      } else {
+        tr[i].style.display = "none"
+      }
+    } 
   }
+}
+
+const toggleMenu = () => {
+  const fx = document.getElementById('fixed_header_area')
+  fx.style.display = (fx.style.display=="none") ? 'block':'none'
+  randomGreeting()
+}
+
+const toggleAddForm = obj => {
+  const f = document.getElementById(obj)
+  f.style.display = (f.style.display == "block") ? "none": "block"
+}
+
+const onAddSubmit = e => {
+  e.preventDefault()
+  const company = document.getElementById("company").value
+  const domain = document.getElementById("domain").value
+  const email = document.getElementById("email").value
+  const status = document.getElementById("status").value
+  const data = [company, domain, email, status, "=Now()"]
+  writeRow(data)
+}
+
+const onEditSubmit = e => {
+  e.preventDefault()
+  const sheetId = document.getElementById("current_sheet_display").value
+  document.cookie = `sheetID=${sheetId}`
+}
+
+const writeRow = data => {
+  const values = [ data ]
+  const body = { values: values }
+  gapi.client.sheets.spreadsheets.values.append({
+    spreadsheetId: '1Ak_zvY5HqoeODZJO7goJBVDxU4uFkHeS6NKsYmuztk8',
+    range: "A1:E",
+    valueInputOption: "USER_ENTERED",
+    resource: body
+  }).then((response) => {
+    location.reload()
+  })
+}
+
+const updateRow = (data, i) => {
+  data = [data.childNodes[1].value, data.childNodes[2].value, data.childNodes[3].value, data.childNodes[5].value, data.childNodes[0].value]
+  const ranges = (("A" + (parseInt(i)+1)) + (":E" + (parseInt(i)+1)))
+  const values = [
+    data
+  ]
+  const body = {
+    values: values
+  }
+  gapi.client.sheets.spreadsheets.values.update({
+    spreadsheetId: '1Ak_zvY5HqoeODZJO7goJBVDxU4uFkHeS6NKsYmuztk8',
+    range: ranges,
+    valueInputOption: "USER_ENTERED",
+    resource: body
+  }).then((response) => {
+    const result = response.result
+    listMajors()
+  })
+}
+
+//https://www.w3schools.com/howto/howto_js_sort_table.asp
+const sortTable = (sortIndex, filter) => {
+  //Handle input
+  const indexFilter = ["date", "name", "domain", "email", "skip", "status"]
+  let newIndex = indexFilter.indexOf(sortIndex) //Tells us which item to sort
+  // Declare variables 
+  let table, tr, td, i, txtValue
+  filter = filter.toUpperCase()
+  table = document.getElementById("results_section")
+  tr = table.getElementsByTagName("tr")
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0] //0 = Date; 1 = Company; 2 = Domain; 3 = Email; 4 = Status;
+    if (td) {
+      txtValue = td.childNodes[newIndex].value
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = ""
+      }else {
+        tr[i].style.display = "none"
+      }
+    } 
+  }
+}
 
 
 
