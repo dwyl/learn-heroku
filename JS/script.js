@@ -55,7 +55,7 @@ const initClient = () => {
 //Declare elements of interest
 const loading = document.getElementsByClassName('bouncybox')[0]
 const loginWindow = document.getElementById('login_window')
-const userContent = document.getElementById('user_content')
+let userContent = document.getElementById('user_content')
 
 document.getElementById('sign_in_btn').addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider).then(function(result) {
