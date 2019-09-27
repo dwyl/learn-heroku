@@ -104,7 +104,7 @@ const verifyUser = user => {
     email: user.email
   })
   .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id)
+      console.log("Document written with ID:")
   })
   .catch(function(error) {
       console.error("Error adding document: ", error)
@@ -153,9 +153,8 @@ const isLoggedIn = document.getElementsByClassName("isLoggedIn")[0]
 const isLoggedOut = document.getElementsByClassName("isLoggedOut")[0]
          
 const appendPre = (message, i) => {
-  const row
   const pre = document.getElementById('results_section')
-  row = pre.insertRow(-1)
+  const row = pre.insertRow(-1)
   const cell = row.insertCell(-1)
   cell.className = "result_object"
   cell.innerHTML = (message)
