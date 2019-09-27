@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+  	<title>Tape Deck | A simple CRM powered by Google</title>
+  	<meta name="description" content="Tape Deck | A simple CRM powered by Google">
+  	<meta name="author" content="Michael Catterall">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+	<link rel="stylesheet" href="../CSS/split.css">
+</head>
+
+<body>
+    <img id="split" src="IMG/refresh.png">
+    <div id="message">
+        <p>
+            This is an example of my Customer Relationship Management (CRM) Software that utilizes Google Sheets as a back end.
+            Once logged into the left frame you will need to click the refresh button (top right) to show Google Sheets!
+        </p>
+        <button>Hide</button>
+    </div>
+    <div id="root">
+        <div id="left-view">
+            <iframe src="../index.html"></iframe>
+        </div>
+        <div id="right-view">
+        <iframe id="sheet_frame" src="https://docs.google.com/spreadsheets/d/1Ak_zvY5HqoeODZJO7goJBVDxU4uFkHeS6NKsYmuztk8"></iframe>
+        </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>	
+  <script src="../JS/split.js"></script>
+</body>
+</html>
