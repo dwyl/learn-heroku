@@ -113,12 +113,28 @@ In the root directory of the App you are trying to deploy,
 create a file called `elixir_buildpack.config`
 
 _Paste_ the following lines into the file:
+
 ```yml
-erlang_version=20.1
-elixir_version=1.6.0
+# Latest version of Erlang/OTP see: https://git.io/Je5k6
+erlang_version=22.2
+
+# Latest Elixir Version see: https://github.com/elixir-lang/elixir/releases
+elixir_version=1.9.4
+
+# Always rebuild from scratch on every deploy?
 always_rebuild=false
+
+# Set the path the app is run from
 runtime_path=/app
 ```
+
+This file overrides the default options defined 
+by adding the buildpack in **Step 9** (_below_).
+For more detail on the configuration options 
+for your `elixir_buildpack.config` file 
+see: 
+https://github.com/HashNuke/heroku-buildpack-elixir#configuration
+
 
 ### 6. Create a `Procfile` File
 
