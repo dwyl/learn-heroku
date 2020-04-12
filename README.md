@@ -77,7 +77,8 @@ In your web browser navigate to:
 [github.com/dwyl/**learn-heroku**](https://github.com/dwyl/learn-heroku)
 (_if you aren't already on the page_)
 
-Click the "fork" button: <br />
+After you have starred the repository,
+click the "fork" button: <br />
 ![learn-heroku-fork-button](https://cloud.githubusercontent.com/assets/194400/23248016/267e77b2-f995-11e6-9748-0ef7dc69c22a.png)
 
 You should now see something similar to this:
