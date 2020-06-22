@@ -83,7 +83,7 @@ click the "fork" button: <br />
 
 You should now see something similar to this:
 ![image](https://cloud.githubusercontent.com/assets/194400/23248074/6e0b7404-f995-11e6-9261-7b8a21f44ab5.png)
-<br />(_whith your GitHub username in place of mine_)
+<br />(_with your GitHub username in place of mine_)
 
 
 #### 2. Log into your Heroku Account and Create a New App
