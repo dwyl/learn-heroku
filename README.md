@@ -58,7 +58,7 @@ an app!
 
 ## How?
 
-### Beginner: Basic Heroku Deployment of Node.JS App in 5 Minutes
+### Beginner: Basic Heroku Deployment of Node.JS App in just 5 Minutes
 
 #### Pre-requisites:
 + **Computer** with a ***Web Browser***
